@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact IM IT</title>
+    <meta
+      name="description"
+      content="Contact IM IT for consulting and deployments."
+    />
+    <link rel="stylesheet" href="/im-it/assets/css/style.css" />
+  </head>
+  <body>
+    <div id="headerMount"></div>
+
+    <main class="section">
+      <div class="container">
+        <h2 data-reveal>Contact Us</h2>
+        <p class="muted" data-reveal>
+          Tell us what you're building. We'll respond quickly.
+        </p>
+
+        <div class="grid-2" style="margin-top: 14px">
+          <div class="card" data-reveal>
+            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+              <div class="field">
+                <label>Name</label>
+                <input name="name" required />
+              </div>
+
+              <div class="field">
+                <label>Email</label>
+                <input type="email" name="email" required />
+              </div>
+
+              <div class="field">
+                <label>Topic</label>
+                <select name="topic">
+                  <option>Homelab Deployment</option>
+                  <option>Cybersecurity</option>
+                  <option>Managed IT</option>
+                  <option>MY.AI Vision</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label>Message</label>
+                <textarea name="message" required></textarea>
+              </div>
+
+              <button class="btn btn-primary" type="submit">Send</button>
+            </form>
+          </div>
+
+          <div class="card" data-reveal>
+            <h3>Email Directly</h3>
+            <p class="muted">
+              <a href="mailto:portfolio.outnumber847@passmail.com">
+                portfolio.outnumber847@passmail.com
+              </a>
+            </p>
+
+            <h3 style="margin-top: 16px">What to include</h3>
+            <ul class="list">
+              <li>Home or business?</li>
+              <li>What services you want</li>
+              <li>Existing hardware</li>
+              <li>Timeline</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="footerMount"></div>
+    <script src="/im-it/assets/js/main.js"></script>
+  </body>
+</html>
