@@ -153,7 +153,12 @@ a:hover {
   background: color-mix(in srgb, var(--panel) 85%, transparent);
   color: var(--text);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-loading {
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .btn:hover {
@@ -369,11 +374,47 @@ select {
   background: color-mix(in srgb, var(--panel) 95%, transparent);
   color: var(--text);
   outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+input:invalid,
+textarea:invalid {
+  border-color: #f87171;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
 }
 
 textarea {
   min-height: 140px;
   resize: vertical;
+}
+
+/* Performance optimizations */
+/* Reduce repaints and improve rendering */
+body {
+  will-change: scroll-position;
+  transform: translateZ(0);
+}
+
+.card {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Optimize animations */
+[data-reveal] {
+  will-change: opacity, transform;
 }
 
 /* Responsive */
@@ -399,4 +440,106 @@ textarea {
   .mobile-menu {
     display: inline-flex;
   }
+}
+
+/* Print styles for better performance */
+@media print {
+  .nav, .mobile-menu, .hero-actions, .chips {
+    display: none !important;
+  }
+  .card {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}
+
+/* Accessibility improvements */
+/* Focus indicators */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--primary);
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: #000;
+    --muted: #000;
+  }
+  
+  .card {
+    border: 2px solid var(--border);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Better color contrast for text */
+@media (prefers-color-scheme: light) {
+  .muted {
+    color: rgba(11, 18, 32, 0.8);
+  }
+}
+
+/* Accessible form labels */
+.field label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Accessible error states */
+input:invalid + .error-message,
+textarea:invalid + .error-message {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
 }

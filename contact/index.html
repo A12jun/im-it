@@ -3,17 +3,54 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contact IM IT</title>
+    <title>Contact IM IT — Get a Free IT Consultation</title>
     <meta
       name="description"
-      content="Contact IM IT for consulting and deployments."
+      content="Contact IM IT for professional IT consulting, cybersecurity services, and homelab deployments. Free consultation available for small businesses and home users."
     />
+    <meta name="keywords" content="contact IT consultant, cybersecurity consultation, homelab setup help, small business IT support, free IT consultation" />
+    <meta name="author" content="IM IT" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yourdomain.com/im-it/contact/" />
+    <meta property="og:title" content="Contact IM IT — Get a Free IT Consultation" />
+    <meta property="og:description" content="Contact IM IT for professional IT consulting, cybersecurity services, and homelab deployments. Free consultation available for small businesses and home users." />
+    <meta property="og:image" content="/im-it/assets/img/logo.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://yourdomain.com/im-it/contact/" />
+    <meta property="twitter:title" content="Contact IM IT — Get a Free IT Consultation" />
+    <meta property="twitter:description" content="Contact IM IT for professional IT consulting, cybersecurity services, and homelab deployments. Free consultation available for small businesses and home users." />
+    <meta property="twitter:image" content="/im-it/assets/img/logo.png" />
+    
+    <!-- Breadcrumb structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://yourdomain.com/im-it/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Contact",
+        "item": "https://yourdomain.com/im-it/contact/"
+      }]
+    }
+    </script>
+    
     <link rel="stylesheet" href="/im-it/assets/css/style.css" />
   </head>
   <body>
     <div id="headerMount"></div>
 
-    <main class="section">
+    <main id="main-content" class="section">
       <div class="container">
         <h2 data-reveal>Contact Us</h2>
         <p class="muted" data-reveal>
@@ -22,7 +59,7 @@
 
         <div class="grid-2" style="margin-top: 14px">
           <div class="card" data-reveal>
-            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
               <div class="field">
                 <label>Name</label>
                 <input name="name" required />
@@ -49,7 +86,8 @@
                 <textarea name="message" required></textarea>
               </div>
 
-              <button class="btn btn-primary" type="submit">Send</button>
+              <button class="btn btn-primary" type="submit" id="submitBtn">Send</button>
+              <div id="formMessage" style="margin-top: 10px; display: none;"></div>
             </form>
           </div>
 
