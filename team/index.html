@@ -42,77 +42,104 @@
     }
     </script>
     
-    <link rel="stylesheet" href="/im-it/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <style>
+      .team-card {
+        text-align: center;
+        padding: 24px;
+      }
+      .team-card img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 16px;
+        border: 3px solid;
+        border-image: var(--accent-gradient) 1;
+        box-shadow: 0 4px 20px var(--glow-pink);
+      }
+      .team-card h3 {
+        margin: 0 0 6px;
+        color: var(--text);
+      }
+      .team-card .role {
+        color: var(--accent-pink);
+        font-weight: 600;
+        font-size: 14px;
+      }
+    </style>
   </head>
   <body>
     <div id="headerMount"></div>
 
     <main id="main-content" class="section">
       <div class="container">
-        <h2 data-reveal>Our Team</h2>
+        <h2 class="section-title" data-reveal>Our Team</h2>
         <p class="muted" data-reveal>
           Real engineers. Real deployments. Friendly support.
         </p>
 
-        <div class="grid-3" style="margin-top: 14px">
-          <div class="card" data-reveal>
+        <div class="grid-3" style="margin-top: 24px">
+          <!-- Mit Shah -->
+          <div class="card card-gradient team-card" data-reveal>
             <img
-              src="/im-it/assets/img/team/mit.png"
+              src="/assets/img/team/mit.png"
               alt="Mit Shah"
-              style="width: 100%; border-radius: 12px; margin-bottom: 10px"
             />
             <h3>Mit Shah</h3>
-            <p class="muted">Founder • Systems Integration</p>
+            <p class="role">Founder • Systems Integration</p>
+            <p class="muted" style="margin-top: 10px; font-size: 14px;">
+              Building robust IT infrastructure for homes and businesses.
+            </p>
           </div>
 
-          <div class="card" data-reveal>
+          <!-- Arjun Karwal -->
+          <div class="card card-gradient team-card" data-reveal>
             <img
-              src="/im-it/assets/img/team/arjun.png"
+              src="/assets/img/team/arjun.png"
               alt="Arjun Karwal"
-              style="width: 100%; border-radius: 12px; margin-bottom: 10px"
             />
             <h3>Arjun Karwal</h3>
-            <p class="muted">Co-Builder</p>
+            <p class="role">Co-Builder</p>
+            <p class="muted" style="margin-top: 10px; font-size: 14px;">
+              Cybersecurity expert focused on secure-by-default solutions.
+            </p>
           </div>
 
-          <div class="card" data-reveal>
+          <!-- Saharsh Shah -->
+          <div class="card card-gradient team-card" data-reveal>
             <img
-              src="/im-it/assets/img/team/saharsh.png"
+              src="/assets/img/team/saharsh.png"
               alt="Saharsh Shah"
-              style="width: 100%; border-radius: 12px; margin-bottom: 10px"
             />
             <h3>Saharsh Shah</h3>
-            <p class="muted">Co-Builder</p>
+            <p class="role">Co-Builder</p>
+            <p class="muted" style="margin-top: 10px; font-size: 14px;">
+              Automation and AI specialist driving future innovations.
+            </p>
           </div>
         </div>
 
-        <h2 style="margin-top: 26px" data-reveal>Growing Team</h2>
+        <h2 class="section-title" style="margin-top: 40px" data-reveal>Growing Team</h2>
+        <p class="muted" data-reveal>We're always looking for talented people. Get in touch if you'd like to join!</p>
         <div class="grid-3" style="margin-top: 14px">
           <div class="card" data-reveal>
-            <h3>Person 1</h3>
-            <p class="muted">Coming soon</p>
+            <h3>Join Our Team</h3>
+            <p class="muted">We're growing! Check back soon for new team members.</p>
           </div>
           <div class="card" data-reveal>
-            <h3>Person 2</h3>
-            <p class="muted">Coming soon</p>
+            <h3>Open Roles</h3>
+            <p class="muted">IT Consultants • Security Analysts • Support Engineers</p>
           </div>
           <div class="card" data-reveal>
-            <h3>Person 3</h3>
-            <p class="muted">Coming soon</p>
-          </div>
-          <div class="card" data-reveal>
-            <h3>Person 4</h3>
-            <p class="muted">Coming soon</p>
-          </div>
-          <div class="card" data-reveal>
-            <h3>Person 5</h3>
-            <p class="muted">Coming soon</p>
+            <h3>Get In Touch</h3>
+            <p class="muted">Interested? <a href="/contact/" style="color: var(--accent-pink);">Contact us</a> today!</p>
           </div>
         </div>
       </div>
     </main>
 
     <div id="footerMount"></div>
-    <script src="/im-it/assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
   </body>
 </html>
