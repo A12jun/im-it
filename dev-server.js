@@ -32,19 +32,23 @@ const server = http.createServer((req, res) => {
     pathname = '/index.html';
   }
   
-  // Check if request is for a directory (e.g., /contact/)
-  // Try to serve index.html from that directory
+  // Start with the full path
   let filePath = path.join(PUBLIC_DIR, pathname);
   
-  // If file doesn't exist and pathname ends with '/', try index.html
-  if (!fs.existsSync(filePath) && pathname.endsWith('/')) {
-    const indexPath = path.join(PUBLIC_DIR, pathname, 'index.html');
-    if (fs.existsSync(indexPath)) {
-      filePath = indexPath;
+  // Check if it's a directory - try to serve index.html from that directory
+  try {
+    const stats = fs.statSync(filePath);
+    if (stats.isDirectory()) {
+      const indexPath = path.join(filePath, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        filePath = indexPath;
+      }
     }
+  } catch (err) {
+    // File doesn't exist - will handle below
   }
   
-  // If still doesn't exist, try without trailing slash
+  // If the path doesn't exist, try removing trailing slash
   if (!fs.existsSync(filePath) && pathname.endsWith('/')) {
     const altPath = path.join(PUBLIC_DIR, pathname.slice(0, -1));
     if (fs.existsSync(altPath)) {
