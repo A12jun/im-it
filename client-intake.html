@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Client Intake Form — IM IT</title>
+    <meta
+      name="description"
+      content="Custom AI & System Development Request Form - IM IT Services"
+    />
+    <meta name="keywords" content="AI development, automation, custom systems, workflow development, prompt engineering" />
+    <meta name="author" content="IM IT" />
+    <meta name="robots" content="noindex, follow" />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Client Intake Form — IM IT" />
+    <meta property="og:description" content="Request custom AI and automation services from IM IT" />
+    
+    <link rel="stylesheet" href="/im-it/assets/css/style.css" />
+    <style>
+      .form-section {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+      
+      .form-section h3 {
+        margin: 0 0 16px;
+        color: var(--accent-pink);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .form-section h3 .section-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: var(--accent-gradient);
+        border-radius: 50%;
+        font-size: 14px;
+        color: white;
+        font-weight: 700;
+      }
+      
+      .form-group {
+        margin-bottom: 16px;
+      }
+      
+      .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text);
+      }
+      
+      .form-group .required {
+        color: var(--accent-pink);
+      }
+      
+      .form-group input[type="text"],
+      .form-group input[type="email"],
+      .form-group input[type="tel"],
+      .form-group input[type="date"],
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg) 50%, var(--panel));
+        color: var(--text);
+        font-size: 15px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        border-color: var(--accent-pink);
+        box-shadow: 0 0 0 3px var(--glow-pink);
+        outline: none;
+      }
+      
+      .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      
+      .radio-group,
+      .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .radio-option,
+      .checkbox-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .radio-option:hover,
+      .checkbox-option:hover {
+        border-color: var(--accent-pink);
+        background: color-mix(in srgb, var(--accent-pink) 10%, transparent);
+      }
+      
+      .radio-option input,
+      .checkbox-option input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--accent-pink);
+      }
+      
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+      
+      .legal-checkboxes {
+        background: linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+        border: 1px solid rgba(236, 72, 153, 0.3);
+      }
+      
+      .legal-checkboxes .checkbox-option {
+        border-color: rgba(236, 72, 153, 0.2);
+      }
+      
+      .legal-notice {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 16px;
+        padding: 12px;
+        background: rgba(236, 72, 153, 0.1);
+        border-radius: 8px;
+        border-left: 3px solid var(--accent-pink);
+      }
+      
+      .form-submit {
+        text-align: center;
+        margin-top: 30px;
+      }
+      
+      .form-submit .btn {
+        padding: 14px 40px;
+        font-size: 16px;
+      }
+      
+      .intro-box {
+        background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+        border: 1px solid rgba(236, 72, 153, 0.2);
+        border-radius: var(--radius);
+        padding: 20px;
+        margin-bottom: 24px;
+      }
+      
+      .intro-box p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      
+      @media (max-width: 768px) {
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="headerMount"></div>
+
+    <main id="main-content" class="section">
+      <div class="container" style="max-width: 800px;">
+        <h2 data-reveal>Client Intake Form</h2>
+        <p class="muted" data-reveal>Last updated: February 16, 2026</p>
+
+        <div class="intro-box" data-reveal>
+          <p><strong>Custom AI & System Development Request</strong></p>
+          <p style="margin-top: 8px;">Please complete this form to request custom automation, AI systems, workflow development, or prompt engineering services. Submission does not guarantee project acceptance. All projects require formal scope approval before development begins.</p>
+        </div>
+
+        <form id="intakeForm" data-reveal>
+          <!-- Section 1: Client Information -->
+          <div class="form-section">
+            <h3><span class="section-number">1</span> Client Information</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Full Name <span class="required">*</span></label>
+                <input type="text" name="fullName" required placeholder="John Smith" />
+              </div>
+              
+              <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" name="companyName" placeholder="Your Company Inc." />
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email Address <span class="required">*</span></label>
+                <input type="email" name="email" required placeholder="john@example.com" />
+              </div>
+              
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" name="phone" placeholder="+1 (555) 123-4567" />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Location <span class="required">*</span></label>
+              <input type="text" name="location" required placeholder="City, Province/State, Country" />
+            </div>
+            
+            <div class="form-group">
+              <label>Preferred Communication</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="communication" value="email" checked />
+                  <span>Email</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="communication" value="phone" />
+                  <span>Phone</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="communication" value="video" />
+                  <span>Video Call</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Project Type -->
+          <div class="form-section">
+            <h3><span class="section-number">2</span> Project Type</h3>
+            
+            <div class="form-group">
+              <label>What type of system are you requesting? <span class="required">*</span></label>
+              <select name="projectType" required>
+                <option value="">Select a project type...</option>
+                <option value="home-automation">Home Automation Setup</option>
+                <option value="ai-workflow">AI Workflow System</option>
+                <option value="custom-gpt">Custom GPT / Prompt Engineering</option>
+                <option value="script-development">Script Development (Python / Google Apps Script / etc.)</option>
+                <option value="dashboard-analytics">Dashboard / Analytics System</option>
+                <option value="business-automation">Business Process Automation</option>
+                <option value="platform-integration">Platform Integration</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group" id="otherProjectGroup" style="display: none;">
+              <label>Please specify</label>
+              <input type="text" name="otherProjectType" placeholder="Describe your project type" />
+            </div>
+          </div>
+
+          <!-- Section 3: Current Setup -->
+          <div class="form-section">
+            <h3><span class="section-number">3</span> Current Setup</h3>
+            
+            <div class="form-group">
+              <label>What tools/platforms are currently being used?</label>
+              <textarea name="currentTools" placeholder="List any tools, platforms, or software you currently use..."></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label>Do you already have paid subscriptions required?</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="hasSubscriptions" value="yes" />
+                  <span>Yes</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="hasSubscriptions" value="no" />
+                  <span>No</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="hasSubscriptions" value="unsure" />
+                  <span>Not Sure</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>List them if yes.</label>
+              <input type="text" name="subscriptionList" placeholder="e.g., ChatGPT Plus, Zapier, Make.com, etc." />
+            </div>
+          </div>
+
+          <!-- Section 4: Objective -->
+          <div class="form-section">
+            <h3><span class="section-number">4</span> Objective</h3>
+            
+            <div class="form-group">
+              <label>What problem are you trying to solve? <span class="required">*</span></label>
+              <textarea name="problem" required placeholder="Describe the main problem or challenge you want to address..."></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label>What does success look like? <span class="required">*</span></label>
+              <textarea name="success" required placeholder="Describe your ideal outcome and what success means to you..."></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label>Is this for: <span class="required">*</span></label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="useType" value="personal" />
+                  <span>Personal use</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="useType" value="business" />
+                  <span>Business use</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="useType" value="hybrid" />
+                  <span>Hybrid</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5: Scope Details -->
+          <div class="form-section">
+            <h3><span class="section-number">5</span> Scope Details</h3>
+            
+            <div class="form-group">
+              <label>Describe exactly what you want built <span class="required">*</span></label>
+              <textarea name="scopeDescription" required placeholder="Include:&#10;- Inputs (what data goes in)&#10;- Outputs (what results you want)&#10;- Data sources (where data comes from)&#10;- Integrations (what other systems to connect)&#10;- Reporting (how you want to see results)&#10;- Security requirements"></textarea>
+            </div>
+          </div>
+
+          <!-- Section 6: Timeline & Budget -->
+          <div class="form-section">
+            <h3><span class="section-number">6</span> Timeline & Budget</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Desired Completion Date</label>
+                <input type="date" name="completionDate" />
+              </div>
+              
+              <div class="form-group">
+                <label>Is this urgent?</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="urgent" value="yes" />
+                    <span>Yes</span>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="urgent" value="no" />
+                    <span>No</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Budget Range</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="budget" value="under-500" />
+                  <span>Under $500</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="budget" value="500-2000" />
+                  <span>$500–$2,000</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="budget" value="2000-10000" />
+                  <span>$2,000–$10,000</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="budget" value="over-10000" />
+                  <span>$10,000+</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="budget" value="open-to-quote" />
+                  <span>Open to Quote</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 7: Legal Acknowledgements -->
+          <div class="form-section legal-checkboxes">
+            <h3><span class="section-number">7</span> Legal Acknowledgements</h3>
+            
+            <div class="legal-notice">
+              <strong>Important:</strong> All checkboxes below are required before submission.
+            </div>
+            
+            <div class="checkbox-group">
+              <label class="checkbox-option">
+                <input type="checkbox" name="legal1" required />
+                <span>I confirm I have legal rights to any materials or systems provided.</span>
+              </label>
+              
+              <label class="checkbox-option">
+                <input type="checkbox" name="legal2" required />
+                <span>I understand scope changes may require revised pricing.</span>
+              </label>
+              
+              <label class="checkbox-option">
+                <input type="checkbox" name="legal3" required />
+                <span>I understand AI and automation systems require human oversight.</span>
+              </label>
+              
+              <label class="checkbox-option">
+                <input type="checkbox" name="legal4" required />
+                <span>I understand development begins only after formal agreement and deposit.</span>
+              </label>
+              
+              <label class="checkbox-option">
+                <input type="checkbox" name="legal5" required />
+                <span>I understand custom systems may be non-refundable once development begins.</span>
+              </label>
+              
+              <label class="checkbox-option">
+                <input type="checkbox" name="legal6" required />
+                <span>I understand the developer is not responsible for third-party platform outages, API pricing changes, or software updates.</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <div id="footerMount"></div>
+    <script src="/im-it/assets/js/main.js"></script>
+    <script>
+      // Show/hide "Other" project type field
+      document.querySelector('select[name="projectType"]').addEventListener('change', function() {
+        const otherGroup = document.getElementById('otherProjectGroup');
+        otherGroup.style.display = this.value === 'other' ? 'block' : 'none';
+      });
+      
+      // Form submission handling
+      document.getElementById('intakeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        
+        // Get checked checkboxes
+        const legalCheckboxes = [];
+        document.querySelectorAll('input[name^="legal"]:checked').forEach(cb => {
+          legalCheckboxes.push(cb.name);
+        });
+        
+        console.log('Form submitted:', data);
+        
+        // Show success message
+        alert('Thank you for your submission! We will review your request and get back to you within 2-3 business days.\n\nNote: This is a demo form. To receive actual submissions, please set up Formspree integration.');
+      });
+    </script>
+  </body>
+</html>
