@@ -6,7 +6,7 @@ const path = require('path');
 const url = require('url');
 
 const PORT = process.env.PORT || 3000;
-const PUBLIC_DIR = path.join(__dirname, 'im-it');
+const PUBLIC_DIR = __dirname;
 
 // MIME types
 const mimeTypes = {
