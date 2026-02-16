@@ -155,8 +155,8 @@ function obfuscateEmail() {
 (async function init() {
   initTheme();
 
-  await loadPartial("headerMount", "/im-it/partials/header.html");
-  await loadPartial("footerMount", "/im-it/partials/footer.html");
+  await loadPartial("headerMount", "/partials/header.html");
+  await loadPartial("footerMount", "/partials/footer.html");
 
   setActiveNav();
   initMobileMenu();
