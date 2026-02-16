@@ -1,0 +1,21 @@
+{
+  "name": "im-it-website",
+  "version": "1.0.0",
+  "description": "IM IT Website - Professional IT consulting and cybersecurity services",
+  "main": "dev-server.js",
+  "scripts": {
+    "start": "node dev-server.js",
+    "dev": "node dev-server.js"
+  },
+  "keywords": [
+    "website",
+    "it-consulting",
+    "cybersecurity",
+    "homelab"
+  ],
+  "author": "IM IT",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

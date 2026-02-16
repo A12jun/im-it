@@ -6,49 +6,49 @@
     
     <!-- Main pages -->
     <url>
-        <loc>https://yourdomain.com/im-it/</loc>
+        <loc>https://your-actual-domain.com/im-it/</loc>
         <lastmod>2026-02-15</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     
     <url>
-        <loc>https://yourdomain.com/im-it/contact/</loc>
+        <loc>https://your-actual-domain.com/im-it/contact/</loc>
         <lastmod>2026-02-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://yourdomain.com/im-it/pricing/</loc>
+        <loc>https://your-actual-domain.com/im-it/pricing/</loc>
         <lastmod>2026-02-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://yourdomain.com/im-it/team/</loc>
+        <loc>https://your-actual-domain.com/im-it/team/</loc>
         <lastmod>2026-02-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     
     <url>
-        <loc>https://yourdomain.com/im-it/coming-soon/</loc>
+        <loc>https://your-actual-domain.com/im-it/coming-soon/</loc>
         <lastmod>2026-02-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>https://yourdomain.com/im-it/404.html</loc>
+        <loc>https://your-actual-domain.com/im-it/404.html</loc>
         <lastmod>2026-02-15</lastmod>
         <changefreq>never</changefreq>
         <priority>0.1</priority>
     </url>
     
     <url>
-        <loc>https://yourdomain.com/im-it/privacy-policy.html</loc>
+        <loc>https://your-actual-domain.com/im-it/privacy-policy.html</loc>
         <lastmod>2026-02-15</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
