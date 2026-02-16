@@ -32,8 +32,25 @@ const server = http.createServer((req, res) => {
     pathname = '/index.html';
   }
   
-  // Remove leading slash for file path
-  const filePath = path.join(PUBLIC_DIR, pathname);
+  // Check if request is for a directory (e.g., /contact/)
+  // Try to serve index.html from that directory
+  let filePath = path.join(PUBLIC_DIR, pathname);
+  
+  // If file doesn't exist and pathname ends with '/', try index.html
+  if (!fs.existsSync(filePath) && pathname.endsWith('/')) {
+    const indexPath = path.join(PUBLIC_DIR, pathname, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      filePath = indexPath;
+    }
+  }
+  
+  // If still doesn't exist, try without trailing slash
+  if (!fs.existsSync(filePath) && pathname.endsWith('/')) {
+    const altPath = path.join(PUBLIC_DIR, pathname.slice(0, -1));
+    if (fs.existsSync(altPath)) {
+      filePath = altPath;
+    }
+  }
   
   // Security: prevent directory traversal
   if (!filePath.startsWith(PUBLIC_DIR)) {
