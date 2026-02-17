@@ -180,6 +180,7 @@ a:hover {
   gap: 14px;
   align-items: center;
   flex: 1;
+  white-space: nowrap;
 }
 
 .nav-links a {
