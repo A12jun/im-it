@@ -147,8 +147,73 @@ function obfuscateEmail() {
     const obfuscated = email.replace(/./g, char => {
       return '&#' + char.charCodeAt(0) + ';';
     });
-    link.setAttribute('href', 'mailto:' + obfuscated);
+    link.setAttribute('mailto:' + obfuscated);
     link.innerHTML = obfuscated;
+  });
+}
+
+// ---- Auto-scrolling ticker with pause ----
+function initTicker() {
+  const track = document.getElementById('ticker-track');
+  if (!track) return;
+
+  // Add scrolling class to start animation
+  track.classList.add('scrolling');
+
+  // Calculate when to pause - check every 100ms
+  let lastScrollPosition = 0;
+  const pauseDuration = 2000; // 2 seconds
+
+  function checkPosition() {
+    const container = track.closest('.auto-scroll-wrapper');
+    if (!container) return;
+
+    const containerWidth = container.offsetWidth;
+    const trackWidth = track.scrollWidth / 2; // Width of one set (we have 2 sets)
+    
+    // Get current transform position
+    const style = window.getComputedStyle(track);
+    const transform = style.transform;
+    let currentX = 0;
+    
+    if (transform && transform !== 'none') {
+      const matrix = new DOMMatrix(transform);
+      currentX = matrix.m41;
+    }
+
+    // Check if first set has scrolled out of view
+    // We want to pause when the second set starts entering
+    const scrollProgress = Math.abs(currentX);
+    
+    // When we've scrolled past the first set (50% of track), pause
+    if (scrollProgress >= trackWidth - 100) {
+      // Pause the animation
+      track.style.animationPlayState = 'paused';
+      
+      // Wait 2 seconds then restart
+      setTimeout(() => {
+        // Reset position to start (creates seamless loop effect)
+        track.style.transform = 'translateX(0)';
+        
+        // Force reflow to reset animation
+        void track.offsetWidth;
+        
+        // Resume animation
+        track.style.animationPlayState = 'running';
+      }, pauseDuration);
+    }
+  }
+
+  // Check position periodically
+  setInterval(checkPosition, 100);
+
+  // Pause on hover
+  track.addEventListener('mouseenter', () => {
+    track.style.animationPlayState = 'paused';
+  });
+
+  track.addEventListener('mouseleave', () => {
+    track.style.animationPlayState = 'running';
   });
 }
 
@@ -162,6 +227,7 @@ function obfuscateEmail() {
   initMobileMenu();
   initContactForm();
   obfuscateEmail();
+  initTicker();
 
   document
     .getElementById("themeToggle")

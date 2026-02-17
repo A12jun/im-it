@@ -710,25 +710,34 @@ select:focus {
   min-height: 280px;
 }
 
-/* Continuous auto-scrolling ticker (like Grayparrot) */
+/* Auto-scrolling ticker with pause-and-restart */
 .auto-scroll-container {
   overflow: hidden;
   margin: 24px 0;
   padding: 10px 0;
 }
 
+.auto-scroll-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
 .auto-scroll-track {
   display: flex;
   gap: 20px;
-  animation: scroll-left 20s linear infinite;
   width: max-content;
 }
 
-.auto-scroll-track:hover {
+/* Animation state - paused */
+.auto-scroll-track.scrolling {
+  animation: ticker-scroll 25s linear infinite;
+}
+
+.auto-scroll-track.paused {
   animation-play-state: paused;
 }
 
-@keyframes scroll-left {
+@keyframes ticker-scroll {
   0% {
     transform: translateX(0);
   }
