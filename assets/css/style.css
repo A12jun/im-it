@@ -710,6 +710,38 @@ select:focus {
   min-height: 280px;
 }
 
+/* Continuous auto-scrolling ticker (like Grayparrot) */
+.auto-scroll-container {
+  overflow: hidden;
+  margin: 24px 0;
+  padding: 10px 0;
+}
+
+.auto-scroll-track {
+  display: flex;
+  gap: 20px;
+  animation: scroll-left 20s linear infinite;
+  width: max-content;
+}
+
+.auto-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.auto-scroll-track .card {
+  flex: 0 0 320px;
+  min-height: 220px;
+}
+
 /* Screen reader only class */
 .sr-only {
   position: absolute;
