@@ -1,8 +1,27 @@
 async function loadPartial(targetId, url) {
   const el = document.getElementById(targetId);
   if (!el) return;
-  const res = await fetch(url, { cache: "no-cache" });
-  el.innerHTML = await res.text();
+  
+  console.log('Loading partial:', url);
+  
+  try {
+    const res = await fetch(url, { cache: "no-cache" });
+    console.log('Response status:', res.status, 'for URL:', url);
+    
+    if (!res.ok) {
+      console.error('Failed to load', url, '- status:', res.status);
+      // Fallback: show error message in the mount point
+      el.innerHTML = '<div style="padding: 20px; color: red;">Failed to load content. Please refresh the page.</div>';
+      return;
+    }
+    
+    el.innerHTML = await res.text();
+    console.log('Successfully loaded:', url);
+  } catch (err) {
+    console.error('Error loading', url, '-', err.message);
+    // Fallback: show error message
+    el.innerHTML = '<div style="padding: 20px; color: red;">Error loading content. Please refresh the page or try a different browser.</div>';
+  }
 }
 
 function setActiveNav() {
