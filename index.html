@@ -41,52 +41,7 @@
     <link rel="stylesheet" href="/assets/css/style.css" />
   </head>
   <body>
-    <!-- Header -->
-    <header class="site-header">
-      <a href="#main-content" class="skip-link">Skip to main content</a>
-      <div class="container nav">
-        <a class="brand" href="/">
-          <img src="/assets/img/logo.png" alt="IM IT logo" class="logo" />
-          <span class="brand-text">
-            <span class="brand-name">IM IT</span>
-            <span class="brand-tag">Cybersecurity & IT. Simplified.</span>
-          </span>
-        </a>
-
-        <nav class="nav-links" aria-label="Primary navigation" role="navigation">
-          <a href="/" data-nav="home">Home</a>
-          <a href="/pricing/" data-nav="pricing">Pricing</a>
-          <a href="/team/" data-nav="team">Team</a>
-          <a href="/contact/" data-nav="contact">Contact</a>
-          <a href="/coming-soon/" data-nav="coming-soon">Coming Soon</a>
-        </nav>
-
-        <div class="nav-actions">
-          <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-            <span class="icon">🌙</span>
-          </button>
-          <a class="btn btn-primary" href="#contact">Book a Free Consultation</a>
-        </div>
-
-        <button class="icon-btn mobile-menu" id="mobileMenuBtn" aria-label="Open menu" title="Menu">
-          <span class="icon">☰</span>
-        </button>
-      </div>
-
-      <div class="mobile-drawer" id="mobileDrawer">
-        <div class="container mobile-links">
-          <a href="/">Home</a>
-          <a href="/pricing/">Pricing</a>
-          <a href="/team/">Team</a>
-          <a href="/contact/">Contact</a>
-          <a href="/coming-soon/">Coming Soon</a>
-          <div class="mobile-actions">
-            <button class="btn btn-secondary" id="themeToggleMobile">Toggle Dark Mode</button>
-            <a class="btn btn-primary" href="#contact">Book a Free Consultation</a>
-          </div>
-        </div>
-      </div>
-    </header>
+    <div id="headerMount"></div>
 
     <main id="main-content">
       <section class="hero">
@@ -103,7 +58,7 @@
             </p>
 
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#contact"
+              <a class="btn btn-primary" href="/contact/"
                 >Book a Free Consultation</a
               >
               <a class="btn btn-secondary" href="/pricing/"
@@ -257,119 +212,9 @@
           </div>
         </div>
       </section>
-
-      <!-- Contact Section -->
-      <section class="section" id="contact">
-        <div class="container">
-          <h2 class="section-title" data-reveal>Contact Us</h2>
-          <p class="muted" data-reveal>
-            Tell us what you're building. We'll respond quickly.
-          </p>
-
-          <div class="grid-2" style="margin-top: 24px">
-            <div class="card card-gradient" data-reveal>
-              <form id="contactForm" action="https://formspree.io/f/maqdjdnv" method="POST">
-                <div class="field">
-                  <label>Name</label>
-                  <input name="name" required />
-                </div>
-
-                <div class="field">
-                  <label>Email</label>
-                  <input type="email" name="email" required />
-                </div>
-
-                <div class="field">
-                  <label>Topic</label>
-                  <select name="topic">
-                    <option>Homelab Deployment</option>
-                    <option>Cybersecurity</option>
-                    <option>Managed IT</option>
-                    <option>MY.AI Vision</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-
-                <div class="field">
-                  <label>Message</label>
-                  <textarea name="message" required></textarea>
-                </div>
-
-                <button class="btn btn-primary" type="submit" id="submitBtn" style="width: 100%;">Send Message</button>
-                <div id="formMessage" style="margin-top: 10px; display: none;"></div>
-              </form>
-            </div>
-
-            <div class="card card-gradient" data-reveal>
-              <h3 style="color: var(--accent-pink);">📧 Email Directly</h3>
-              <p class="muted" style="margin-top: 10px;">
-                <a href="mailto:portfolio.request305@passmail.com" style="color: var(--accent-pink); font-weight: 600; font-size: 18px;">
-                  portfolio.request305@passmail.com
-                </a>
-              </p>
-
-              <h3 style="margin-top: 24px;">What to include</h3>
-              <ul class="list">
-                <li>Home or business?</li>
-                <li>What services you want</li>
-                <li>Existing hardware</li>
-                <li>Timeline</li>
-              </ul>
-
-              <div style="margin-top: 24px; padding: 16px; background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); border-radius: 12px; border: 1px solid rgba(236, 72, 153, 0.2);">
-                <p style="margin: 0; color: var(--text); font-weight: 600;">💬 Prefer Client Intake?</p>
-                <p class="muted" style="margin-top: 8px;">For custom AI and automation projects, use our <a href="/client-intake.html" style="color: var(--accent-pink);">Client Intake Form</a></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="container footer-grid">
-        <div>
-          <div class="footer-brand">
-            <img src="/assets/img/logo.png" alt="IM IT logo" class="logo" />
-            <strong>IM IT</strong>
-          </div>
-          <p class="muted">
-            Friendly IT consulting and managed services for small businesses and
-            home labs — with a long-term vision for MY.AI.
-          </p>
-        </div>
-
-        <div>
-          <strong>Company</strong>
-          <ul>
-            <li><a href="/team/">Team</a></li>
-            <li><a href="/pricing/">Pricing</a></li>
-            <li><a href="/contact/">Contact</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <strong>Services</strong>
-          <ul>
-            <li><a href="/pricing/">Homelab Deployments</a></li>
-            <li><a href="/pricing/">Cybersecurity</a></li>
-            <li><a href="/coming-soon/">MY.AI (Coming Soon)</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <strong>Legal</strong>
-          <ul>
-            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="container footer-bottom">
-        <span class="muted">© <span id="year"></span> IM IT. All rights reserved.</span>
-      </div>
-    </footer>
-
+    <div id="footerMount"></div>
     <script src="/assets/js/main.js"></script>
   </body>
 </html>

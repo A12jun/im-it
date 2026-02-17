@@ -181,7 +181,7 @@ function initTicker() {
 
   // Calculate when to pause - check every 100ms
   let lastScrollPosition = 0;
-  const pauseDuration = 2000; // 2 seconds
+  const pauseDuration = 3000; // 3 seconds
 
   function checkPosition() {
     const container = track.closest('.auto-scroll-wrapper');
