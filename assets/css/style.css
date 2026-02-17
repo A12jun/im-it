@@ -199,6 +199,7 @@ a:hover {
 .nav-actions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -209,6 +210,10 @@ a:hover {
   border-radius: 12px;
   padding: 8px 10px;
   cursor: pointer;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .icon {
