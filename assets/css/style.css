@@ -737,6 +737,22 @@ select:focus {
   }
 }
 
+.ticker-item {
+  flex: 0 0 380px;
+  padding: 16px 20px;
+  background: color-mix(in srgb, var(--panel) 85%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.ticker-item strong {
+  color: var(--accent-pink);
+}
+
 .auto-scroll-track .card {
   flex: 0 0 320px;
   min-height: 220px;
