@@ -677,6 +677,39 @@ select:focus {
   }
 }
 
+/* Horizontal scroll section */
+.horizontal-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 5px 20px;
+  margin-top: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-pink) var(--border);
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-gradient);
+  border-radius: 3px;
+}
+
+.horizontal-scroll .card {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+  min-height: 280px;
+}
+
 /* Screen reader only class */
 .sr-only {
   position: absolute;
