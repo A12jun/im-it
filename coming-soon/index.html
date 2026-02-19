@@ -14,60 +14,126 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://yourdomain.com/im-it/coming-soon/" />
+    <meta property="og:url" content="https://yourdomain.com/coming-soon/" />
     <meta property="og:title" content="Coming Soon — IM IT Services & Features" />
     <meta property="og:description" content="Discover upcoming services and features from IM IT. Stay tuned for new IT consulting offerings, cybersecurity enhancements, and MY.AI developments." />
-    <meta property="og:image" content="/im-it/assets/img/logo.png" />
+    <meta property="og:image" content="/assets/img/logo.png" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://yourdomain.com/im-it/coming-soon/" />
+    <meta property="twitter:url" content="https://yourdomain.com/coming-soon/" />
     <meta property="twitter:title" content="Coming Soon — IM IT Services & Features" />
     <meta property="twitter:description" content="Discover upcoming services and features from IM IT. Stay tuned for new IT consulting offerings, cybersecurity enhancements, and MY.AI developments." />
-    <meta property="twitter:image" content="/im-it/assets/img/logo.png" />
+    <meta property="twitter:image" content="/assets/img/logo.png" />
     
-    <!-- Breadcrumb structured data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://yourdomain.com/im-it/"
-      },{
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Coming Soon",
-        "item": "https://yourdomain.com/im-it/coming-soon/"
-      }]
-    }
-    </script>
-    
-    <link rel="stylesheet" href="/im-it/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
   </head>
   <body>
-    <div id="headerMount"></div>
+    <!-- Header -->
+    <header class="site-header">
+      <a href="#main-content" class="skip-link">Skip to main content</a>
+      <div class="container nav">
+        <a class="brand" href="/">
+          <img src="/assets/img/logo.png" alt="IM IT logo" class="logo" />
+          <span class="brand-text">
+            <span class="brand-name">IM IT</span>
+            <span class="brand-tag">Cybersecurity & IT. Simplified.</span>
+          </span>
+        </a>
+
+        <nav class="nav-links" aria-label="Primary navigation" role="navigation">
+          <a href="/" data-nav="home">Home</a>
+          <a href="/about-us/" data-nav="about-us">About Us</a>
+          <a href="/pricing/" data-nav="pricing">Pricing</a>
+          <a href="/team/" data-nav="team">Team</a>
+          <a href="/coming-soon/" data-nav="coming-soon">Coming Soon</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+            <span class="icon">🌙</span>
+          </button>
+          <button class="btn btn-primary">Book a Free Consultation</button>
+        </div>
+
+        <button class="icon-btn mobile-menu" id="mobileMenuBtn" aria-label="Open menu" title="Menu">
+          <span class="icon">☰</span>
+        </button>
+      </div>
+
+      <div class="mobile-drawer" id="mobileDrawer">
+        <div class="container mobile-links">
+          <a href="/">Home</a>
+          <a href="/about-us/">About Us</a>
+          <a href="/pricing/">Pricing</a>
+          <a href="/team/">Team</a>
+          <a href="/coming-soon/">Coming Soon</a>
+          <div class="mobile-actions">
+            <button class="btn btn-secondary" id="themeToggleMobile">Toggle Dark Mode</button>
+            <button class="btn btn-primary">Book a Free Consultation</button>
+          </div>
+        </div>
+      </div>
+    </header>
 
     <main id="main-content" class="section">
       <div class="container">
         <div class="card" data-reveal>
           <h2>Coming Soon</h2>
           <p class="muted">
-            We’re building additional service pages and MY.AI roadmap details.
+            We're building additional service pages and MY.AI roadmap details.
           </p>
           <div class="hero-actions" style="margin-top: 14px">
-            <a class="btn btn-primary" href="/im-it/contact/"
-              >Book a Consultation</a
-            >
-            <a class="btn btn-secondary" href="/im-it/">Back to Home</a>
+            <a class="btn btn-secondary" href="/">Back to Home</a>
           </div>
         </div>
       </div>
     </main>
 
-    <div id="footerMount"></div>
-    <script src="/im-it/assets/js/main.js"></script>
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="footer-brand">
+            <img src="/assets/img/logo.png" alt="IM IT logo" class="logo" />
+            <strong>IM IT</strong>
+          </div>
+          <p class="muted">
+            Friendly IT consulting and managed services for small businesses and
+            home labs — with a long-term vision for MY.AI.
+          </p>
+        </div>
+
+        <div>
+          <strong>Company</strong>
+          <ul>
+            <li><a href="/team/">Team</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <strong>Services</strong>
+          <ul>
+            <li><a href="/pricing/">Homelab Deployments</a></li>
+            <li><a href="/pricing/">Cybersecurity</a></li>
+            <li><a href="/coming-soon/">MY.AI (Coming Soon)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <strong>Legal</strong>
+          <ul>
+            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <span class="muted">© <span id="year"></span> IM IT. All rights reserved.</span>
+      </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
   </body>
 </html>
