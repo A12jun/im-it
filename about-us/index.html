@@ -11,43 +11,373 @@
     <link rel="stylesheet" href="/assets/css/style.css" />
   </head>
   <body>
-    <div id="headerMount"></div>
+    <!-- Header -->
+    <header class="site-header">
+      <a href="#main-content" class="skip-link">Skip to main content</a>
+      <div class="container nav">
+        <a class="brand" href="/">
+          <img src="/assets/img/logo.png" alt="IM IT logo" class="logo" />
+          <span class="brand-text">
+            <span class="brand-name">IM IT</span>
+            <span class="brand-tag">Cybersecurity & IT. Simplified.</span>
+          </span>
+        </a>
+
+        <nav class="nav-links" aria-label="Primary navigation" role="navigation">
+          <a href="/" data-nav="home">Home</a>
+          <a href="/about-us/" data-nav="about-us">About Us</a>
+          <a href="/pricing/" data-nav="pricing">Pricing</a>
+          <a href="/team/" data-nav="team">Team</a>
+          <a href="/coming-soon/" data-nav="coming-soon">Coming Soon</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+            <span class="icon">🌙</span>
+          </button>
+          <button class="btn btn-primary">Book a Free Consultation</button>
+        </div>
+
+        <button class="icon-btn mobile-menu" id="mobileMenuBtn" aria-label="Open menu" title="Menu">
+          <span class="icon">☰</span>
+        </button>
+      </div>
+
+      <div class="mobile-drawer" id="mobileDrawer">
+        <div class="container mobile-links">
+          <a href="/">Home</a>
+          <a href="/about-us/">About Us</a>
+          <a href="/pricing/">Pricing</a>
+          <a href="/team/">Team</a>
+          <a href="/coming-soon/">Coming Soon</a>
+          <div class="mobile-actions">
+            <button class="btn btn-secondary" id="themeToggleMobile">Toggle Dark Mode</button>
+            <button class="btn btn-primary">Book a Free Consultation</button>
+          </div>
+        </div>
+      </div>
+    </header>
 
     <main id="main-content" class="section">
       <div class="container">
         <h2 class="section-title" data-reveal>About Us</h2>
         
+        <!-- Who We Are -->
         <div class="card card-gradient" data-reveal style="margin-top: 24px;">
-          <h3>Who We Are</h3>
+          <h3>Engineering Infrastructure That Lasts</h3>
           <p class="muted">
-            [YOUR TEXT HERE - Replace this with your company description]
+            IM IT was founded on a simple idea: technology should empower people, not overwhelm them.
+          </p>
+          <p class="muted">
+            We help small businesses and home users design, deploy, and maintain secure, self-managed infrastructure that is reliable, private, and built to scale. Whether you are running a small office network or building a sophisticated home lab, our mission is the same — deliver clean architecture, clear documentation, and long-term stability.
+          </p>
+          <p class="muted">
+            We do not believe in fragile systems, vendor lock-in, or "it works for now." We believe in infrastructure engineered correctly from day one.
           </p>
         </div>
 
+        <!-- Our Philosophy -->
         <div class="card card-gradient" data-reveal style="margin-top: 24px;">
-          <h3>Our Mission</h3>
-          <p class="muted">
-            [YOUR TEXT HERE - Replace this with your mission statement]
-          </p>
-        </div>
-
-        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
-          <h3>Why Choose Us</h3>
+          <h3>Our Philosophy</h3>
+          <p class="muted">Technology should meet three core standards:</p>
           <ul class="list">
-            <li>[YOUR TEXT HERE - Reason 1]</li>
-            <li>[YOUR TEXT HERE - Reason 2]</li>
-            <li>[YOUR TEXT HERE - Reason 3]</li>
+            <li><strong>Ownership</strong> – You control your data.</li>
+            <li><strong>Security</strong> – Systems are hardened by default.</li>
+            <li><strong>Resilience</strong> – Failures are planned for, not feared.</li>
+          </ul>
+          <p class="muted">We design environments that respect these principles.</p>
+        </div>
+
+        <!-- Core Technologies -->
+        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
+          <h3>Core Technologies We Work With</h3>
+          <p class="muted">Our tool selection is intentional. Here is what we work with:</p>
+          
+          <div style="margin-top: 20px;">
+            <!-- Plex -->
+            <div style="margin-bottom: 20px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px;">
+              <span style="font-size: 24px;">🎬</span>
+              <strong style="margin-left: 10px;">Plex / Emby</strong>
+              <p class="muted" style="margin-top: 8px;"><strong>What it is:</strong> Private media streaming platforms</p>
+              <p class="muted"><strong>Benefits:</strong> Stream your own content library to any device, anywhere. No monthly fees, full control over your media.</p>
+              <p class="muted"><strong>Integration:</strong> Deployed on local infrastructure (Docker or VM), secured behind your firewall with optional VPN access.</p>
+            </div>
+
+            <!-- AdGuard -->
+            <div style="margin-bottom: 20px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px;">
+              <span style="font-size: 24px;">🛡️</span>
+              <strong style="margin-left: 10px;">AdGuard / Pi-hole</strong>
+              <p class="muted" style="margin-top: 8px;"><strong>What it is:</strong> Network-wide DNS filtering</p>
+              <p class="muted"><strong>Benefits:</strong> Block ads, trackers, and malware across ALL devices on your network. Faster browsing, more privacy.</p>
+              <p class="muted"><strong>Integration:</strong> Runs on a small device (Raspberry Pi or VM), filters DNS requests for your entire network.</p>
+            </div>
+
+            <!-- pfSense -->
+            <div style="margin-bottom: 20px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px;">
+              <span style="font-size: 24px;">🔥</span>
+              <strong style="margin-left: 10px;">pfSense / OPNsense</strong>
+              <p class="muted" style="margin-top: 8px;"><strong>What it is:</strong> Enterprise-grade firewalls</p>
+              <p class="muted"><strong>Benefits:</strong> VLAN segmentation, intrusion detection, traffic shaping, and advanced security policies.</p>
+              <p class="muted"><strong>Integration:</strong> Forms the backbone of your network security with configurable rules and monitoring.</p>
+            </div>
+
+            <!-- WireGuard -->
+            <div style="margin-bottom: 20px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px;">
+              <span style="font-size: 24px;">🔐</span>
+              <strong style="margin-left: 10px;">WireGuard</strong>
+              <p class="muted" style="margin-top: 8px;"><strong>What it is:</strong> Modern VPN protocol</p>
+              <p class="muted"><strong>Benefits:</strong> Lightning fast, minimal code base, maximum security. Access your network from anywhere.</p>
+              <p class="muted"><strong>Integration:</strong> Deploy on firewall or dedicated VM for secure remote access without exposing services to the internet.</p>
+            </div>
+
+            <!-- Nextcloud -->
+            <div style="margin-bottom: 20px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px;">
+              <span style="font-size: 24px;">☁️</span>
+              <strong style="margin-left: 10px;">Nextcloud</strong>
+              <p class="muted" style="margin-top: 8px;"><strong>What it is:</strong> Self-hosted cloud platform</p>
+              <p class="muted"><strong>Benefits:</strong> Google Drive/Dropbox alternative with full privacy. File sync, calendar, contacts, docs.</p>
+              <p class="muted"><strong>Integration:</strong> Runs in Docker or LXC, accessible via web or mobile apps with end-to-end encryption.</p>
+            </div>
+
+            <!-- Proxmox -->
+            <div style="margin-bottom: 20px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px;">
+              <span style="font-size: 24px;">🖥️</span>
+              <strong style="margin-left: 10px;">Proxmox VE</strong>
+              <p class="muted" style="margin-top: 8px;"><strong>What it is:</strong> Virtualization platform</p>
+              <p class="muted"><strong>Benefits:</strong> Run multiple VMs and containers on one machine. Snapshots, backups, high availability.</p>
+              <p class="muted"><strong>Integration:</strong> Central hub for all services with web-based management and cluster support.</p>
+            </div>
+
+            <!-- TrueNAS -->
+            <div style="margin-bottom: 20px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px;">
+              <span style="font-size: 24px;">💾</span>
+              <strong style="margin-left: 10px;">TrueNAS</strong>
+              <p class="muted" style="margin-top: 8px;"><strong>What it is:</strong> ZFS-based storage OS</p>
+              <p class="muted"><strong>Benefits:</strong> Enterprise data protection. Automatic snapshots, RAID, data scrubbing, bit-rot protection.</p>
+              <p class="muted"><strong>Integration:</strong> Dedicated storage server or VM with NFS/SMB sharing to your network.</p>
+            </div>
+
+            <!-- Home Assistant -->
+            <div style="margin-bottom: 20px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px;">
+              <span style="font-size: 24px;">🏠</span>
+              <strong style="margin-left: 10px;">Home Assistant</strong>
+              <p class="muted" style="margin-top: 8px;"><strong>What it is:</strong> Smart home hub</p>
+              <p class="muted"><strong>Benefits:</strong> Centralize all smart devices. Automations, dashboards, local control without cloud.</p>
+              <p class="muted"><strong>Integration:</strong> Connects thousands of devices locally with secure remote access via WireGuard.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- What We Build - Homelab -->
+        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
+          <h3>Self-Managed Homelab Infrastructure</h3>
+          <p class="muted">For advanced home users and enthusiasts, we design powerful local server environments capable of running:</p>
+          <ul class="list">
+            <li>Media streaming (Plex / Emby)</li>
+            <li>Private cloud storage (Nextcloud)</li>
+            <li>Network-wide ad blocking (AdGuard / Pi-hole)</li>
+            <li>Smart home automation (Home Assistant)</li>
+            <li>VPN and remote access (WireGuard)</li>
+            <li>Secure firewalling (pfSense / OPNsense)</li>
+            <li>Network monitoring and alerting</li>
+            <li>Private AI compute foundations (future MY.AI platform)</li>
+          </ul>
+          <p class="muted"><strong>Deployment Platforms:</strong></p>
+          <p class="muted">These systems are typically deployed on virtualization platforms such as Proxmox VE, Virtualized Linux containers (LXC), or Docker-based service stacks. Each deployment is tailored to the client's hardware, use case, and growth plans.</p>
+        </div>
+
+        <!-- What We Build - Business -->
+        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
+          <h3>Business-Grade Infrastructure for Small Companies</h3>
+          <p class="muted">For small businesses, we implement foundational IT systems that are clean, secure, and manageable:</p>
+          <ul class="list">
+            <li>Identity and access controls</li>
+            <li>Segmented network design</li>
+            <li>Firewall configuration and policy enforcement</li>
+            <li>Secure remote access (WireGuard)</li>
+            <li>Backup and disaster recovery planning</li>
+            <li>Endpoint strategy and patching approach</li>
+          </ul>
+          <p class="muted">We prefer solutions that are stable, auditable, and widely supported in the open-source ecosystem.</p>
+        </div>
+
+        <!-- High Availability -->
+        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
+          <h3>High Availability & Redundancy</h3>
+          <p class="muted">We design systems that assume failure will eventually happen.</p>
+          <ul class="list">
+            <li>Dual-node Proxmox clusters</li>
+            <li>Replicated ZFS storage pools</li>
+            <li>Scheduled snapshot replication</li>
+            <li>Automated backup verification</li>
+            <li>Secondary offsite backups</li>
+            <li>UPS integration and graceful shutdown policies</li>
           </ul>
         </div>
 
+        <!-- Disaster Recovery -->
+        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
+          <h3>Disaster Recovery Strategy</h3>
+          <p class="muted">We design backup strategies based on the "3-2-1" principle:</p>
+          <ul class="list">
+            <li>3 copies of data</li>
+            <li>2 different media types</li>
+            <li>1 offsite copy</li>
+          </ul>
+          <p class="muted">Backups are useless unless they are tested. We help clients understand recovery procedures — not just backup status.</p>
+        </div>
+
+        <!-- Security -->
+        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
+          <h3>Security-First Approach</h3>
+          <p class="muted">Every deployment includes baseline hardening practices:</p>
+          <ul class="list">
+            <li>Default credential removal</li>
+            <li>SSH key enforcement where possible</li>
+            <li>Network segmentation</li>
+            <li>Firewall rule validation</li>
+            <li>Port exposure minimization</li>
+            <li>Update policy configuration</li>
+          </ul>
+          <p class="muted">We reduce attack surface first, then add convenience.</p>
+        </div>
+
+        <!-- Documentation -->
+        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
+          <h3>Documentation & Handoff</h3>
+          <p class="muted">Unlike many consultants, we do not create dependency. Each deployment includes:</p>
+          <ul class="list">
+            <li>Architecture overview</li>
+            <li>Service list</li>
+            <li>Access instructions</li>
+            <li>Recovery notes</li>
+            <li>Upgrade roadmap</li>
+          </ul>
+          <p class="muted">Clients can choose to manage the environment themselves or engage us for ongoing support.</p>
+        </div>
+
+        <!-- MY.AI -->
+        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
+          <h3>The Future: MY.AI</h3>
+          <p class="muted">IM IT is building toward a long-term initiative called MY.AI.</p>
+          <p class="muted">The vision is to create secure, local-first AI systems that:</p>
+          <ul class="list">
+            <li>Learn from user-owned content</li>
+            <li>Operate on private infrastructure</li>
+            <li>Maintain strict access controls</li>
+            <li>Preserve family knowledge and digital legacy</li>
+          </ul>
+          <p class="muted">This is a phased roadmap initiative built on top of secure infrastructure foundations. We believe personal AI should be owned, not rented.</p>
+        </div>
+
+        <!-- Why IM IT -->
+        <div class="card card-gradient" data-reveal style="margin-top: 24px;">
+          <h3>Why IM IT</h3>
+          <p class="muted">We are not a large managed service provider. We are engineers who understand infrastructure deeply — from networking and virtualization to automation and cybersecurity.</p>
+          <p class="muted">Our work reflects:</p>
+          <ul class="list">
+            <li>Clean architecture</li>
+            <li>Practical tooling</li>
+            <li>Respect for privacy</li>
+            <li>Long-term thinking</li>
+          </ul>
+          <p class="muted">We do not chase trends. We build systems that last.</p>
+        </div>
+
         <div class="hero-actions" style="margin-top: 24px;">
-          <a class="btn btn-primary" href="/contact/">Get in Touch</a>
-          <a class="btn btn-secondary" href="/pricing/">View Pricing</a>
+          <a class="btn btn-secondary" href="/">Back to Home</a>
         </div>
       </div>
     </main>
 
-    <div id="footerMount"></div>
-    <script src="/assets/js/main.js"></script>
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="footer-brand">
+            <img src="/assets/img/logo.png" alt="IM IT logo" class="logo" />
+            <strong>IM IT</strong>
+          </div>
+          <p class="muted">
+            Friendly IT consulting and managed services for small businesses and
+            home labs — with a long-term vision for MY.AI.
+          </p>
+        </div>
+
+        <div>
+          <strong>Company</strong>
+          <ul>
+            <li><a href="/team/">Team</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <strong>Services</strong>
+          <ul>
+            <li><a href="/pricing/">Homelab Deployments</a></li>
+            <li><a href="/pricing/">Cybersecurity</a></li>
+            <li><a href="/coming-soon/">MY.AI (Coming Soon)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <strong>Legal</strong>
+          <ul>
+            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        <span class="muted">© <span id="year"></span> IM IT. All rights reserved.</span>
+      </div>
+    </footer>
+
+    <script>
+      // Theme toggle
+      var themeToggle = document.getElementById('themeToggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme') || 'dark';
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+      var themeToggleMobile = document.getElementById('themeToggleMobile');
+      if (themeToggleMobile) {
+        themeToggleMobile.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme') || 'dark';
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+      // Load saved theme
+      var savedTheme = localStorage.getItem('theme');
+      if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+      // Set year
+      var yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+      // Mobile menu
+      var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      var mobileDrawer = document.getElementById('mobileDrawer');
+      if (mobileMenuBtn && mobileDrawer) {
+        mobileMenuBtn.addEventListener('click', function() {
+          mobileDrawer.classList.toggle('open');
+        });
+      }
+      // Scroll reveal
+      var revealItems = document.querySelectorAll('[data-reveal]');
+      if (revealItems.length) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) entry.target.classList.add('revealed');
+          });
+        }, { threshold: 0.12 });
+        revealItems.forEach(function(el) { observer.observe(el); });
+      }
+    </script>
   </body>
 </html>
