@@ -47,6 +47,11 @@
       .team-card {
         text-align: center;
         padding: 24px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .team-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px var(--glow-pink);
       }
       .team-card img {
         width: 150px;
@@ -133,7 +138,7 @@
           </div>
           <div class="card" data-reveal>
             <h3>Get In Touch</h3>
-            <p class="muted">Interested? <a href="/contact/" style="color: var(--accent-pink);">Contact us</a> today!</p>
+            <p class="muted">Interested? We'd love to hear from you!</p>
           </div>
         </div>
       </div>

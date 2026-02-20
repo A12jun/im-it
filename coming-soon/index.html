@@ -12,20 +12,6 @@
     <meta name="author" content="IM IT" />
     <meta name="robots" content="index, follow" />
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://yourdomain.com/coming-soon/" />
-    <meta property="og:title" content="Coming Soon — IM IT Services & Features" />
-    <meta property="og:description" content="Discover upcoming services and features from IM IT. Stay tuned for new IT consulting offerings, cybersecurity enhancements, and MY.AI developments." />
-    <meta property="og:image" content="/assets/img/logo.png" />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://yourdomain.com/coming-soon/" />
-    <meta property="twitter:title" content="Coming Soon — IM IT Services & Features" />
-    <meta property="twitter:description" content="Discover upcoming services and features from IM IT. Stay tuned for new IT consulting offerings, cybersecurity enhancements, and MY.AI developments." />
-    <meta property="twitter:image" content="/assets/img/logo.png" />
-    
     <link rel="stylesheet" href="/assets/css/style.css" />
   </head>
   <body>
@@ -83,7 +69,33 @@
           <p class="muted">
             We're building additional service pages and MY.AI roadmap details.
           </p>
-          <div class="hero-actions" style="margin-top: 14px">
+          <p class="muted" style="margin-top: 12px;">
+            While you wait, why not play a quick game?
+          </p>
+          
+          <!-- Game Selection -->
+          <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="showGame('snake')">🐍 Play Snake</button>
+            <button class="btn btn-primary" onclick="showGame('bitdodger')">🤖 Play Bit Dodger</button>
+          </div>
+          
+          <!-- Snake Game -->
+          <div id="snake-game" style="display: none; margin-top: 20px;">
+            <canvas id="snakeCanvas" width="414" height="414" style="background: #000; border-radius: 8px; display: block; margin: 0 auto;"></canvas>
+            <p class="muted" style="text-align: center; margin-top: 10px;">Use arrow keys to move. Press Space to restart.</p>
+            <p class="muted" style="text-align: center;">Score: <span id="snakeScore">0</span></p>
+            <div id="snake-highscores" style="margin-top: 10px; text-align: center;"></div>
+          </div>
+          
+          <!-- Bit Dodger Game -->
+          <div id="bitdodger-game" style="display: none; margin-top: 20px;">
+            <canvas id="bitdodgerCanvas" width="368" height="552" style="background: #0a0a0f; border-radius: 8px; display: block; margin: 0 auto;"></canvas>
+            <p class="muted" style="text-align: center; margin-top: 10px;">Click or press Space to jump. Press R to restart.</p>
+            <p class="muted" style="text-align: center;">Score: <span id="bitdodgerScore">0</span></p>
+            <div id="bitdodger-highscores" style="margin-top: 10px; text-align: center;"></div>
+          </div>
+          
+          <div class="hero-actions" style="margin-top: 24px">
             <a class="btn btn-secondary" href="/">Back to Home</a>
           </div>
         </div>
@@ -134,6 +146,368 @@
       </div>
     </footer>
 
-    <script src="/assets/js/main.js"></script>
+    <script>
+      // Theme toggle
+      var themeToggle = document.getElementById('themeToggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme') || 'dark';
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+      var themeToggleMobile = document.getElementById('themeToggleMobile');
+      if (themeToggleMobile) {
+        themeToggleMobile.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme') || 'dark';
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+      var savedTheme = localStorage.getItem('theme');
+      if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+      var yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+      var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      var mobileDrawer = document.getElementById('mobileDrawer');
+      if (mobileMenuBtn && mobileDrawer) {
+        mobileMenuBtn.addEventListener('click', function() {
+          mobileDrawer.classList.toggle('open');
+        });
+      }
+      var revealItems = document.querySelectorAll('[data-reveal]');
+      if (revealItems.length) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) entry.target.classList.add('revealed');
+          });
+        }, { threshold: 0.12 });
+        revealItems.forEach(function(el) { observer.observe(el); });
+      }
+
+      // High Scores
+      function getHighScores(game) {
+        var scores = localStorage.getItem(game + 'HighScores');
+        return scores ? JSON.parse(scores) : [];
+      }
+
+      function saveHighScore(game, score) {
+        var scores = getHighScores(game);
+        scores.push(score);
+        scores.sort(function(a, b) { return b - a; });
+        scores = scores.slice(0, 10);
+        localStorage.setItem(game + 'HighScores', JSON.stringify(scores));
+        return scores;
+      }
+
+      function displayHighScores(game, elementId) {
+        var scores = getHighScores(game);
+        var el = document.getElementById(elementId);
+        if (scores.length === 0) {
+          el.innerHTML = '<p class="muted" style="font-size: 12px;">No high scores yet!</p>';
+        } else {
+          var html = '<p class="muted" style="font-size: 12px; margin-bottom: 4px;">🏆 Top 10 High Scores:</p><p class="muted" style="font-size: 11px;">';
+          scores.forEach(function(s, i) { html += (i+1) + '. ' + s + '<br>'; });
+          html += '</p>';
+          el.innerHTML = html;
+        }
+      }
+
+      // Game switching
+      function showGame(game) {
+        document.getElementById('snake-game').style.display = game === 'snake' ? 'block' : 'none';
+        document.getElementById('bitdodger-game').style.display = game === 'bitdodger' ? 'block' : 'none';
+        if (game === 'snake') {
+          displayHighScores('snake', 'snake-highscores');
+          startSnakeCountdown();
+        }
+        if (game === 'bitdodger') {
+          displayHighScores('bitdodger', 'bitdodger-highscores');
+          startBitdodgerCountdown();
+        }
+      }
+
+      // SNAKE GAME
+      var snakeCanvas, snakeCtx, snakeInterval;
+      var snake = [], food = {}, snakeDirection, snakeScore;
+      var snakeGameRunning = false;
+      var snakeCountdown = 3;
+
+      function startSnakeCountdown() {
+        snakeCountdown = 3;
+        document.getElementById('snakeScore').textContent = 'Get Ready...';
+        var countdownInterval = setInterval(function() {
+          snakeCountdown--;
+          if (snakeCountdown > 0) {
+            document.getElementById('snakeScore').textContent = snakeCountdown;
+          } else {
+            clearInterval(countdownInterval);
+            startSnake();
+          }
+        }, 1000);
+      }
+
+      function startSnake() {
+        if (snakeInterval) clearInterval(snakeInterval);
+        snakeCanvas = document.getElementById('snakeCanvas');
+        snakeCtx = snakeCanvas.getContext('2d');
+        snake = [{x: 10, y: 10}, {x: 9, y: 10}, {x: 8, y: 10}];
+        snakeDirection = {x: 1, y: 0};
+        snakeScore = 0;
+        document.getElementById('snakeScore').textContent = '0';
+        placeFood();
+        snakeGameRunning = true;
+        snakeInterval = setInterval(updateSnake, 100);
+        document.addEventListener('keydown', handleSnakeKey);
+      }
+
+      function placeFood() {
+        food = {
+          x: Math.floor(Math.random() * 20),
+          y: Math.floor(Math.random() * 20)
+        };
+      }
+
+      function updateSnake() {
+        if (!snakeGameRunning) return;
+        var head = {x: snake[0].x + snakeDirection.x, y: snake[0].y + snakeDirection.y};
+        if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20 || snake.some(function(s) { return s.x === head.x && s.y === head.y; })) {
+          snakeGameRunning = false;
+          clearInterval(snakeInterval);
+          var finalScore = snakeScore;
+          saveHighScore('snake', finalScore);
+          displayHighScores('snake', 'snake-highscores');
+          alert('Game Over! Score: ' + finalScore);
+          return;
+        }
+        snake.unshift(head);
+        if (head.x === food.x && head.y === food.y) {
+          snakeScore++;
+          document.getElementById('snakeScore').textContent = snakeScore;
+          placeFood();
+        } else {
+          snake.pop();
+        }
+        drawSnake();
+      }
+
+      function drawSnake() {
+        snakeCtx.fillStyle = '#000';
+        snakeCtx.fillRect(0, 0, 414, 414);
+        snakeCtx.fillStyle = '#ec4899';
+        snake.forEach(function(s, i) {
+          snakeCtx.fillRect(s.x * 20.7, s.y * 20.7, 18, 18);
+        });
+        snakeCtx.fillStyle = '#22c55e';
+        snakeCtx.fillRect(food.x * 20.7, food.y * 20.7, 18, 18);
+      }
+
+      function handleSnakeKey(e) {
+        if (e.code === 'Space') {
+          startSnakeCountdown();
+          e.preventDefault();
+        }
+        if (e.code === 'ArrowUp' && snakeDirection.y !== 1) {
+          snakeDirection = {x: 0, y: -1};
+          e.preventDefault();
+        }
+        if (e.code === 'ArrowDown' && snakeDirection.y !== -1) {
+          snakeDirection = {x: 0, y: 1};
+          e.preventDefault();
+        }
+        if (e.code === 'ArrowLeft' && snakeDirection.x !== 1) {
+          snakeDirection = {x: -1, y: 0};
+          e.preventDefault();
+        }
+        if (e.code === 'ArrowRight' && snakeDirection.x !== -1) {
+          snakeDirection = {x: 1, y: 0};
+          e.preventDefault();
+        }
+      }
+
+      // BIT DODGER GAME
+      var bitdodgerCanvas, bitdodgerCtx, bitdodgerInterval;
+      var robot = {x: 50, y: 200, velocity: 0};
+      var pipes = [];
+      var bitdodgerScore = 0;
+      var bitdodgerGameRunning = false;
+      var bitdodgerCountdown = 3;
+      var binaryOffset = 0;
+
+      function startBitdodgerCountdown() {
+        bitdodgerCountdown = 3;
+        document.getElementById('bitdodgerScore').textContent = 'Get Ready...';
+        var countdownInterval = setInterval(function() {
+          bitdodgerCountdown--;
+          if (bitdodgerCountdown > 0) {
+            document.getElementById('bitdodgerScore').textContent = bitdodgerCountdown;
+          } else {
+            clearInterval(countdownInterval);
+            startBitdodger();
+          }
+        }, 1000);
+      }
+
+      function startBitdodger() {
+        if (bitdodgerInterval) clearInterval(bitdodgerInterval);
+        bitdodgerCanvas = document.getElementById('bitdodgerCanvas');
+        bitdodgerCtx = bitdodgerCanvas.getContext('2d');
+        robot = {x: 50, y: 200, velocity: 0};
+        pipes = [];
+        bitdodgerScore = 0;
+        binaryOffset = 0;
+        document.getElementById('bitdodgerScore').textContent = '0';
+        bitdodgerGameRunning = true;
+        bitdodgerInterval = setInterval(updateBitdodger, 24);
+        document.addEventListener('keydown', handleBitdodgerKey);
+        bitdodgerCanvas.addEventListener('click', jumpRobot);
+      }
+
+      function jumpRobot() {
+        if (bitdodgerGameRunning) {
+          robot.velocity = -6;
+        }
+      }
+
+      function handleBitdodgerKey(e) {
+        if (e.code === 'Space') {
+          jumpRobot();
+          e.preventDefault();
+        }
+        if (e.code === 'KeyR') {
+          startBitdodgerCountdown();
+        }
+      }
+
+      function updateBitdodger() {
+        if (!bitdodgerGameRunning) return;
+        robot.velocity += 0.25;
+        robot.y += robot.velocity;
+        binaryOffset += 0.05;
+        
+        if (pipes.length === 0 || pipes[pipes.length - 1].x < 200) {
+          pipes.push({x: 368, top: Math.random() * 200 + 50});
+        }
+        pipes.forEach(function(pipe) { pipe.x -= 2; });
+        pipes = pipes.filter(function(pipe) { return pipe.x > -50; });
+        
+        var hitPipe = pipes.some(function(pipe) {
+          return robot.x + 24 > pipe.x && robot.x < pipe.x + 46 && (robot.y < pipe.top || robot.y + 24 > pipe.top + 140);
+        });
+        
+        if (robot.y > 528 || robot.y < 0 || hitPipe) {
+          bitdodgerGameRunning = false;
+          clearInterval(bitdodgerInterval);
+          var finalScore = bitdodgerScore;
+          saveHighScore('bitdodger', finalScore);
+          displayHighScores('bitdodger', 'bitdodger-highscores');
+          alert('Game Over! Score: ' + finalScore);
+          return;
+        }
+        
+        pipes.forEach(function(pipe) {
+          if (pipe.x + 46 < robot.x && !pipe.passed) {
+            bitdodgerScore++;
+            document.getElementById('bitdodgerScore').textContent = bitdodgerScore;
+            pipe.passed = true;
+          }
+        });
+        
+        drawBitdodger();
+      }
+
+      function drawBitdodger() {
+        // Dark cyber background
+        bitdodgerCtx.fillStyle = '#0a0a0f';
+        bitdodgerCtx.fillRect(0, 0, 368, 552);
+        
+        // Grid lines
+        bitdodgerCtx.strokeStyle = '#1a1a2e';
+        bitdodgerCtx.lineWidth = 1;
+        for (var i = 0; i < 552; i += 40) {
+          bitdodgerCtx.beginPath();
+          bitdodgerCtx.moveTo(0, i);
+          bitdodgerCtx.lineTo(368, i);
+          bitdodgerCtx.stroke();
+        }
+        for (var j = 0; j < 368; j += 40) {
+          bitdodgerCtx.beginPath();
+          bitdodgerCtx.moveTo(j, 0);
+          bitdodgerCtx.lineTo(j, 552);
+          bitdodgerCtx.stroke();
+        }
+        
+        // Draw pipes with binary
+        bitdodgerCtx.font = '10px monospace';
+        bitdodgerCtx.fillStyle = '#00ff41';
+        
+        pipes.forEach(function(pipe) {
+          // Top pipe (dark)
+          bitdodgerCtx.fillStyle = '#1a1a2e';
+          bitdodgerCtx.fillRect(pipe.x, 0, 46, pipe.top);
+          bitdodgerCtx.strokeStyle = '#00ff41';
+          bitdodgerCtx.strokeRect(pipe.x, 0, 46, pipe.top);
+          
+          // Bottom pipe
+          bitdodgerCtx.fillStyle = '#1a1a2e';
+          bitdodgerCtx.fillRect(pipe.x, pipe.top + 140, 46, 552 - pipe.top - 140);
+          bitdodgerCtx.strokeStyle = '#00ff41';
+          bitdodgerCtx.strokeRect(pipe.x, pipe.top + 140, 46, 552 - pipe.top - 140);
+          
+          // Binary on pipes
+          bitdodgerCtx.fillStyle = '#00ff41';
+          bitdodgerCtx.font = '10px monospace';
+          
+          // Flowing binary on top pipe
+          for (var y = 10; y < pipe.top - 10; y += 12) {
+            var offset = Math.floor((y + binaryOffset * 20) % 2);
+            var bin = offset === 0 ? '1' : '0';
+            bitdodgerCtx.fillText(bin, pipe.x + 18, y);
+          }
+          
+          // Flowing binary on bottom pipe
+          for (var y = pipe.top + 150; y < 540; y += 12) {
+            var offset = Math.floor((y + binaryOffset * 20) % 2);
+            var bin = offset === 0 ? '0' : '1';
+            bitdodgerCtx.fillText(bin, pipe.x + 18, y);
+          }
+        });
+        
+        // Draw AI Robot
+        var rx = robot.x;
+        var ry = robot.y;
+        
+        // Robot body
+        bitdodgerCtx.fillStyle = '#c0c0c0';
+        bitdodgerCtx.beginPath();
+        bitdodgerCtx.arc(rx + 12, ry + 12, 12, 0, Math.PI * 2);
+        bitdodgerCtx.fill();
+        
+        // Robot eye (glowing)
+        bitdodgerCtx.fillStyle = '#00ffff';
+        bitdodgerCtx.shadowColor = '#00ffff';
+        bitdodgerCtx.shadowBlur = 10;
+        bitdodgerCtx.beginPath();
+        bitdodgerCtx.arc(rx + 16, ry + 10, 5, 0, Math.PI * 2);
+        bitdodgerCtx.fill();
+        bitdodgerCtx.shadowBlur = 0;
+        
+        // Robot antenna
+        bitdodgerCtx.strokeStyle = '#c0c0c0';
+        bitdodgerCtx.lineWidth = 2;
+        bitdodgerCtx.beginPath();
+        bitdodgerCtx.moveTo(rx + 12, ry);
+        bitdodgerCtx.lineTo(rx + 12, ry - 6);
+        bitdodgerCtx.stroke();
+        
+        // Antenna light
+        bitdodgerCtx.fillStyle = '#ff0000';
+        bitdodgerCtx.beginPath();
+        bitdodgerCtx.arc(rx + 12, ry - 8, 2, 0, Math.PI * 2);
+        bitdodgerCtx.fill();
+      }
+    </script>
   </body>
 </html>
