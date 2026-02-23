@@ -171,6 +171,65 @@ function obfuscateEmail() {
   });
 }
 
+// ---- Dynamic Testimonials ----
+async function loadTestimonials() {
+  const track = document.getElementById('testimonial-track');
+  if (!track) return;
+
+  try {
+    // Load the JSON file with testimonial file names
+    const res = await fetch('/assets/testimonials.json', { cache: "no-cache" });
+    if (!res.ok) throw new Error('Failed to load testimonials list');
+    
+    const files = await res.json();
+    
+    let testimonialsHTML = '';
+    
+    // Load each testimonial file
+    for (const file of files) {
+      try {
+        const testimonialRes = await fetch(`/assets/Testimonials/${file}`, { cache: "no-cache" });
+        if (!testimonialRes.ok) continue;
+        
+        const content = await testimonialRes.text();
+        
+        // Parse the testimonial content
+        let name = '';
+        let text = '';
+        
+        const lines = content.split('\n');
+        for (const line of lines) {
+          if (line.startsWith('Name:')) {
+            name = line.replace('Name:', '').trim();
+          } else if (line.startsWith('Content:')) {
+            text = line.replace('Content:', '').trim();
+          }
+        }
+        
+        if (name && text) {
+          testimonialsHTML += `
+            <div class="testimonial-slide">
+              <div class="testimonial-card">
+                <p class="testimonial-text">"${text}"</p>
+                <div class="testimonial-author">— ${name}</div>
+              </div>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error('Error loading testimonial:', file, err);
+      }
+    }
+    
+    // Duplicate for seamless loop
+    track.innerHTML = testimonialsHTML + testimonialsHTML;
+    
+  } catch (err) {
+    console.error('Error loading testimonials:', err);
+    track.innerHTML = '<p style="padding: 20px; text-align: center;">Testimonials coming soon...</p>';
+  }
+}
+
 // ---- Auto-scrolling ticker with pause ----
 function initTicker() {
   const track = document.getElementById('ticker-track');

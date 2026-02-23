@@ -579,6 +579,68 @@ select:focus {
   transform: translateY(0);
 }
 
+/* Testimonials - Superlist style scrolling */
+.testimonial-section {
+  overflow: hidden;
+  padding: 40px 0;
+  background: var(--bg);
+}
+
+.testimonial-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.testimonial-track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+}
+
+.testimonial-slide {
+  flex: 0 0 calc(33.333% - 16px);
+  min-width: 320px;
+  max-width: 450px;
+  padding: 0 12px;
+}
+
+.testimonial-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  height: 100%;
+}
+
+.testimonial-text {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 16px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Animate testimonials - smooth continuous scroll */
+.testimonial-track {
+  animation: testimonial-scroll 40s linear infinite;
+}
+
+@keyframes testimonial-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 12px)); }
+}
+
+.testimonial-section:hover .testimonial-track {
+  animation-play-state: paused;
+}
+
 /* Utility */
 .muted {
   color: var(--muted);

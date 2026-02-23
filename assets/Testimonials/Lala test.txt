@@ -1,0 +1,3 @@
+Name: Lala Test
+
+Content: I’ve worked with developers before, but this was different. They think in systems. The AI integrations, custom scripts, and internal dashboards they built gave us leverage. Real leverage. This is not surface-level automation — this is infrastructure.
