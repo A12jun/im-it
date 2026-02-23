@@ -1,0 +1,41 @@
+Assess
+
+Understand the environment before touching it.
+
+We begin by analyzing the current state of your infrastructure — not just what exists, but how it behaves.
+
+What This Includes:
+
+Network topology mapping
+
+Hardware inventory and performance evaluation
+
+Firewall and rule audit (pfSense / OPNsense)
+
+Storage health review (ZFS pools, SMART data, replication state)
+
+Backup verification testing (not just checking if backups “exist”)
+
+VLAN and segmentation review
+
+Credential and access control audit
+
+Remote access exposure review
+
+Service dependency mapping (Docker, LXC, VM relationships)
+
+Outcome:
+
+A clear report identifying:
+
+Single points of failure
+
+Security gaps
+
+Performance bottlenecks
+
+Architectural inconsistencies
+
+Upgrade opportunities
+
+We do not guess. We measure first.

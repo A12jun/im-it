@@ -1,0 +1,33 @@
+Deploy
+
+Controlled implementation. No shortcuts.
+
+Deployment is executed methodically, with staged validation.
+
+What This Includes:
+
+Proxmox installation and hardening
+
+ZFS pool creation and tuning
+
+Firewall configuration and IDS/IPS activation
+
+VLAN segmentation enforcement
+
+Service deployment (Plex, Nextcloud, AdGuard, Home Assistant, etc.)
+
+WireGuard VPN setup
+
+SSH key enforcement and credential hardening
+
+Snapshot scheduling
+
+Automated backup configuration
+
+Monitoring and alerting configuration
+
+UPS integration and graceful shutdown policies
+
+Every stage is validated before moving forward.
+
+We reduce attack surface first. Then we enable access.

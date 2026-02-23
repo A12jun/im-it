@@ -1,0 +1,39 @@
+Design
+
+Engineer the architecture correctly from day one.
+
+Once we understand the environment, we design a clean, documented, scalable architecture.
+
+What This Includes:
+
+Segmented network layout (VLAN strategy)
+
+Firewall rule matrix design
+
+Identity and access control model
+
+Virtualization strategy (Proxmox cluster, LXC vs VM placement)
+
+Storage architecture (TrueNAS layout, RAID-Z planning, snapshot policies)
+
+Backup strategy using 3-2-1 principle
+
+Remote access strategy (WireGuard deployment model)
+
+Service isolation design (Docker bridge vs macvlan, container boundaries)
+
+Future scalability planning
+
+We design for:
+
+Failure tolerance
+
+Hardware expansion
+
+Security-first access
+
+Clean documentation
+
+Outcome:
+
+A blueprint-level infrastructure plan before deployment begins.
