@@ -545,11 +545,13 @@ select:focus {
   width: max-content;
 }
 
-.auto-scroll-track.scrolling {
-  animation: ticker-scroll 30s linear infinite;
+/* Ticker - CSS animation for smooth continuous scroll */
+.auto-scroll-track {
+  animation: scroll-left 30s linear infinite;
+  will-change: transform;
 }
 
-@keyframes ticker-scroll {
+@keyframes scroll-left {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
@@ -595,6 +597,7 @@ select:focus {
   display: flex;
   gap: 0;
   width: max-content;
+  will-change: transform;
 }
 
 .testimonial-slide {
@@ -627,18 +630,14 @@ select:focus {
   color: var(--primary);
 }
 
-/* Animate testimonials - smooth continuous scroll */
+/* Testimonials - CSS animation for smooth continuous scroll */
 .testimonial-track {
-  animation: testimonial-scroll 40s linear infinite;
+  animation: scroll-left 30s linear infinite;
 }
 
-@keyframes testimonial-scroll {
+@keyframes scroll-left {
   0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-50% - 12px)); }
-}
-
-.testimonial-section:hover .testimonial-track {
-  animation-play-state: paused;
+  100% { transform: translateX(-50%); }
 }
 
 /* Utility */

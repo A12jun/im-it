@@ -230,69 +230,29 @@ async function loadTestimonials() {
   }
 }
 
-// ---- Auto-scrolling ticker with pause ----
-function initTicker() {
-  const track = document.getElementById('ticker-track');
+// ---- Infinite scroll - conveyor belt effect ----
+function initInfiniteScroll(trackId, speed = 1) {
+  const track = document.getElementById(trackId);
   if (!track) return;
 
-  // Add scrolling class to start animation
-  track.classList.add('scrolling');
-
-  // Calculate when to pause - check every 100ms
-  let lastScrollPosition = 0;
-  const pauseDuration = 3000; // 3 seconds
-
-  function checkPosition() {
-    const container = track.closest('.auto-scroll-wrapper');
-    if (!container) return;
-
-    const containerWidth = container.offsetWidth;
-    const trackWidth = track.scrollWidth / 2; // Width of one set (we have 2 sets)
+  let position = 0;
+  
+  function animate() {
+    position -= speed;
     
-    // Get current transform position
-    const style = window.getComputedStyle(track);
-    const transform = style.transform;
-    let currentX = 0;
+    // Get the width of one complete set (first half of the duplicated content)
+    const trackWidth = track.scrollWidth / 2;
     
-    if (transform && transform !== 'none') {
-      const matrix = new DOMMatrix(transform);
-      currentX = matrix.m41;
+    // When we've scrolled one complete set, reset to 0 (seamless loop)
+    if (Math.abs(position) >= trackWidth) {
+      position = 0;
     }
-
-    // Check if first set has scrolled out of view
-    // We want to pause when the second set starts entering
-    const scrollProgress = Math.abs(currentX);
     
-    // When we've scrolled past the first set (50% of track), pause
-    if (scrollProgress >= trackWidth - 100) {
-      // Pause the animation
-      track.style.animationPlayState = 'paused';
-      
-      // Wait 2 seconds then restart
-      setTimeout(() => {
-        // Reset position to start (creates seamless loop effect)
-        track.style.transform = 'translateX(0)';
-        
-        // Force reflow to reset animation
-        void track.offsetWidth;
-        
-        // Resume animation
-        track.style.animationPlayState = 'running';
-      }, pauseDuration);
-    }
+    track.style.transform = `translateX(${position}px)`;
+    requestAnimationFrame(animate);
   }
-
-  // Check position periodically
-  setInterval(checkPosition, 100);
-
-  // Pause on hover
-  track.addEventListener('mouseenter', () => {
-    track.style.animationPlayState = 'paused';
-  });
-
-  track.addEventListener('mouseleave', () => {
-    track.style.animationPlayState = 'running';
-  });
+  
+  animate();
 }
 
 (async function init() {
@@ -305,7 +265,9 @@ function initTicker() {
   initMobileMenu();
   initContactForm();
   obfuscateEmail();
-  initTicker();
+  
+  // Load testimonials - CSS handles the scrolling now
+  loadTestimonials();
 
   document
     .getElementById("themeToggle")
