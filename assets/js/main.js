@@ -236,23 +236,43 @@ function initInfiniteScroll(trackId, speed = 1) {
   if (!track) return;
 
   let position = 0;
-  
+
   function animate() {
     position -= speed;
-    
+
     // Get the width of one complete set (first half of the duplicated content)
     const trackWidth = track.scrollWidth / 2;
-    
+
     // When we've scrolled one complete set, reset to 0 (seamless loop)
     if (Math.abs(position) >= trackWidth) {
       position = 0;
     }
-    
+
     track.style.transform = `translateX(${position}px)`;
     requestAnimationFrame(animate);
   }
-  
+
   animate();
+}
+
+// ---- Tabs ----
+function initTabs() {
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.dataset.tab;
+
+      // Remove active class from all buttons and contents
+      tabButtons.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+
+      // Add active class to clicked button and corresponding content
+      btn.classList.add('active');
+      document.getElementById(tabId)?.classList.add('active');
+    });
+  });
 }
 
 (async function init() {
@@ -280,4 +300,5 @@ function initInfiniteScroll(trackId, speed = 1) {
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   initReveal();
+  initTabs();
 })();

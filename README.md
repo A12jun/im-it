@@ -71,6 +71,28 @@
 - ✅ Removed Mail address (email only)
 - ✅ Email updated to portfolio.request305@passmail.com
 
+#### **11. Logo Consistency Fixes** ✅
+- ✅ Updated about-us page header and footer to use `logo-removebg-preview.png`
+- ✅ Updated coming-soon page header and footer to use `logo-removebg-preview.png`
+- ✅ Updated footer partial to match header logo
+- ✅ All pages now use consistent logo
+
+#### **12. Hero Text Visibility Fixes** ✅
+- ✅ Made hero headline white for readability in light mode
+- ✅ Made hero description text white in light mode
+- ✅ Made chips/bullets white in light mode
+
+#### **13. Pricing Page Enhancements** ✅
+- ✅ Made $5,000 price white in light mode (Autonomous tier)
+- ✅ Added gradient button with theme-aware text (white in dark, black in light)
+- ✅ Aligned all "Get Started" buttons at same level
+- ✅ Reduced spacing between pricing cards and text below (24px → 12px)
+- ✅ Aligned logos and tier names at same level with consistent min-height
+
+#### **14. Testimonials & Ticker Scrolling** ✅
+- ✅ Switched to CSS animations for smoother continuous scrolling
+- ✅ Slowed ticker to speed 0.5 for better readability
+
 ### ⚠️ **REMAINING TASKS BEFORE DEPLOYMENT**
 
 #### **Required Actions (Must Do):**

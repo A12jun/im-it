@@ -115,19 +115,42 @@ This document summarizes all the improvements made to the IM IT website to enhan
 - **Enhanced button states** with loading indicators
 - **Implemented better color schemes** for accessibility
 
+### 17. Logo Consistency ✅
+- **Updated about-us page** to use `logo-removebg-preview.png` in header and footer
+- **Updated coming-soon page** to use `logo-removebg-preview.png` in header and footer
+- **Updated footer partial** to match header logo
+- **All pages now use consistent logo**
+
+### 18. Hero Text Visibility ✅
+- **Made hero headline white** for readability in light mode
+- **Made hero description white** in light mode
+- **Made chips/bullets white** in light mode
+
+### 19. Pricing Page Enhancements ✅
+- **Made $5,000 price white** in light mode (Autonomous tier)
+- **Added gradient button** with theme-aware text (white in dark, black in light)
+- **Aligned all buttons** at same vertical level using flexbox
+- **Reduced spacing** between pricing and text below (24px → 12px)
+- **Aligned logos and names** at same level with consistent min-height
+
+### 20. Testimonials & Ticker Scrolling ✅
+- **Switched to CSS animations** for smoother continuous scrolling
+- **Slowed ticker speed** to 0.5 for better readability
+
 ## Files Modified/Created
 
 ### Modified Files:
 1. `/im-it/index.html` - Enhanced SEO and accessibility
 2. `/im-it/contact/index.html` - Form improvements and SEO
-3. `/im-it/pricing/index.html` - SEO optimization
+3. `/im-it/pricing/index.html` - SEO optimization and enhancements
 4. `/im-it/team/index.html` - SEO optimization
-5. `/im-it/coming-soon/index.html` - SEO optimization
-6. `/im-it/404.html` - SEO optimization
-7. `/im-it/assets/css/style.css` - Performance and accessibility
-8. `/im-it/assets/js/main.js` - Form functionality and security
-9. `/im-it/partials/header.html` - Accessibility improvements
-10. `/im-it/partials/footer.html` - Added legal section
+5. `/im-it/about-us/index.html` - Logo consistency fix
+6. `/im-it/coming-soon/index.html` - SEO optimization and logo fix
+7. `/im-it/404.html` - SEO optimization
+8. `/im-it/assets/css/style.css` - Performance, accessibility, and design enhancements
+9. `/im-it/assets/js/main.js` - Form functionality and security
+10. `/im-it/partials/header.html` - Accessibility improvements
+11. `/im-it/partials/footer.html` - Added legal section and logo fix
 
 ### New Files Created:
 1. `/im-it/robots.txt` - SEO and crawl directives
