@@ -255,24 +255,112 @@ function initInfiniteScroll(trackId, speed = 1) {
   animate();
 }
 
-// ---- Tabs ----
+// ---- Dial-up loading for navigation ----
+function initDialupNavigation() {
+  // Links that should show dial-up animation (only Coming Soon)
+  const dialupLinks = ['/coming-soon/'];
+  
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    
+    const href = link.getAttribute('href');
+    if (!href) return;
+    
+    // Check if this link should have dial-up effect
+    const shouldShowDialup = dialupLinks.some(path => href === path || href.endsWith(path));
+    
+    if (shouldShowDialup && !href.startsWith('http')) {
+      e.preventDefault();
+      showDialupNavigation(href);
+    }
+  });
+}
+
+function showDialupNavigation(targetUrl) {
+  const overlay = document.getElementById('dialupOverlay');
+  const textEl = document.getElementById('dialupText');
+  const progressEl = document.getElementById('dialupProgress');
+  
+  if (!overlay) {
+    window.location.href = targetUrl;
+    return;
+  }
+  
+  const messages = [
+    'Connecting...',
+    'Loading...'
+  ];
+  
+  overlay.classList.add('active');
+  textEl.textContent = '';
+  progressEl.style.width = '0%';
+  
+  let msgIndex = 0;
+  let charIndex = 0;
+  
+  function typeMessage() {
+    if (msgIndex < messages.length) {
+      if (charIndex === 0) {
+        textEl.textContent = '';
+      }
+      
+      if (charIndex < messages[msgIndex].length) {
+        textEl.textContent += messages[msgIndex][charIndex];
+        charIndex++;
+        setTimeout(typeMessage, 15);
+      } else {
+        msgIndex++;
+        charIndex = 0;
+        progressEl.style.width = (msgIndex / messages.length * 100) + '%';
+        setTimeout(typeMessage, 100);
+      }
+    } else {
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 300);
+    }
+  }
+  
+  typeMessage();
+}
+
+// ---- Tabs (no dial-up effect, instant switch) ----
 function initTabs() {
   const tabButtons = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
 
   tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {
+      // Don't do anything if clicking on already active tab
+      if (btn.classList.contains('active')) return;
+      
       const tabId = btn.dataset.tab;
-
-      // Remove active class from all buttons and contents
-      tabButtons.forEach(b => b.classList.remove('active'));
-      tabContents.forEach(c => c.classList.remove('active'));
-
-      // Add active class to clicked button and corresponding content
-      btn.classList.add('active');
-      document.getElementById(tabId)?.classList.add('active');
+      switchTabDirect(tabId, tabButtons, tabContents);
     });
   });
+}
+
+function switchTabDirect(tabId, tabButtons, tabContents) {
+  // Remove active class from all buttons and contents
+  tabButtons.forEach(b => b.classList.remove('active'));
+  tabContents.forEach(c => c.classList.remove('active'));
+
+  // Add active class to clicked button and corresponding content
+  const btn = document.querySelector(`[data-tab="${tabId}"]`);
+  if (btn) btn.classList.add('active');
+  
+  const targetContent = document.getElementById(tabId);
+  if (targetContent) {
+    targetContent.classList.add('active');
+    
+    // Reset card index for the new tab
+    const container = targetContent.querySelector('.scroll-container');
+    if (container) {
+      container.dataset.currentIndex = 0;
+      showCard(container, 0);
+    }
+  }
 }
 
 // ---- Book-style page flip ----
@@ -343,21 +431,20 @@ function navigateCard(container, direction) {
     return;
   }
   
-  // Animate the flip
+  // Apply Matrix glitch effect
   const currentCard = cards[currentIndex];
   const nextCard = cards[newIndex];
   
-  if (direction > 0) {
-    currentCard.classList.add('flipping-next');
-    nextCard.classList.add('enter-next');
-  } else {
-    currentCard.classList.add('flipping-prev');
-    nextCard.classList.add('enter-prev');
-  }
+  // Add glitch class to both cards for the effect
+  currentCard.classList.add('glitch');
+  nextCard.classList.add('glitch');
   
+  // Remove glitch class after animation
   setTimeout(() => {
+    currentCard.classList.remove('glitch');
+    nextCard.classList.remove('glitch');
     showCard(container, newIndex);
-  }, 300);
+  }, 400);
 }
 
 function goToNextTab(currentTabContent) {
@@ -457,4 +544,5 @@ function updatePageDots(container, index) {
   initReveal();
   initTabs();
   initScrollArrows();
+  initDialupNavigation();
 })();
