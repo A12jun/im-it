@@ -78,7 +78,7 @@
           <!-- Game Selection -->
           <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
             <button class="btn btn-primary" onclick="showGame('snake')">🐍 Play Snake</button>
-            <button class="btn btn-primary" onclick="showGame('bitdodger')">🤖 Play Bit Dodger</button>
+            <button class="btn btn-primary" onclick="showGame('typer')">⌨️ Play Terminal Typer</button>
           </div>
           
           <!-- Snake Game -->
@@ -89,12 +89,31 @@
             <div id="snake-highscores" style="margin-top: 10px; text-align: center;"></div>
           </div>
           
-          <!-- Bit Dodger Game -->
-          <div id="bitdodger-game" style="display: none; margin-top: 20px;">
-            <canvas id="bitdodgerCanvas" width="368" height="552" style="background: #0a0a0f; border-radius: 8px; display: block; margin: 0 auto;"></canvas>
-            <p class="muted" style="text-align: center; margin-top: 10px;">Click or press Space to jump. Press R to restart.</p>
-            <p class="muted" style="text-align: center;">Score: <span id="bitdodgerScore">0</span></p>
-            <div id="bitdodger-highscores" style="margin-top: 10px; text-align: center;"></div>
+          <!-- Terminal Typer Game -->
+          <div id="typer-game" style="display: none; margin-top: 20px;">
+            <canvas id="typerCanvas" width="600" height="400" style="background: #0a0a0f; border-radius: 8px; display: block; margin: 0 auto;"></canvas>
+            <div style="text-align: center; margin-top: 10px;">
+              <input type="text" id="typerInput" placeholder="Type the word here..." style="width: 300px; padding: 10px; border-radius: 8px; border: 2px solid #00ff41; background: #000; color: #00ff41; font-family: monospace; font-size: 16px; text-align: center;" />
+            </div>
+            <p class="muted" style="text-align: center; margin-top: 10px;">Type the word before time runs out! Press Enter to submit.</p>
+            <p class="muted" style="text-align: center;">Score: <span id="typerScore">0</span> | Time: <span id="typerTime">5.0</span>s</p>
+            <div style="text-align: center; margin-top: 10px;">
+              <button class="btn btn-secondary" onclick="startTyperCountdown()">🔄 Restart Game</button>
+            </div>
+            <div id="typer-highscores" style="margin-top: 10px; text-align: center;"></div>
+          </div>
+          
+          <!-- Terminal Typer Game Over Modal -->
+          <div id="typer-gameover" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center;">
+            <div style="background: #0a0a0f; border: 2px solid #00ff41; border-radius: 16px; padding: 40px; text-align: center; max-width: 400px;">
+              <h2 style="color: #00ff41; margin: 0 0 20px 0; font-family: monospace;">⌨️ TERMINAL TYPER</h2>
+              <p style="color: #fff; font-size: 18px; margin: 10px 0;">Score: <span id="typerFinalScore" style="color: #00ffff;">0</span></p>
+              <p style="color: #fff; font-size: 18px; margin: 10px 0;">Speed: <span id="typerFinalWPM" style="color: #00ffff;">0</span> WPM</p>
+              <p style="color: #fff; font-size: 18px; margin: 10px 0;">Rank: <span id="typerFinalRank" style="color: #00ffff;">Beginner</span></p>
+              <p style="color: #666; font-size: 14px; margin: 10px 0;">(<span id="typerFinalPercent">70%</span> of population)</p>
+              <p style="color: #00ff41; font-size: 16px; margin-top: 30px;">Click Restart to try again!</p>
+              <button class="btn btn-primary" onclick="startTyperCountdown(); document.getElementById('typer-gameover').style.display='none';" style="margin-top: 20px;">🔄 Restart</button>
+            </div>
           </div>
           
           <div class="hero-actions" style="margin-top: 24px">
@@ -222,14 +241,14 @@
       // Game switching
       function showGame(game) {
         document.getElementById('snake-game').style.display = game === 'snake' ? 'block' : 'none';
-        document.getElementById('bitdodger-game').style.display = game === 'bitdodger' ? 'block' : 'none';
+        document.getElementById('typer-game').style.display = game === 'typer' ? 'block' : 'none';
         if (game === 'snake') {
           displayHighScores('snake', 'snake-highscores');
           startSnakeCountdown();
         }
-        if (game === 'bitdodger') {
-          displayHighScores('bitdodger', 'bitdodger-highscores');
-          startBitdodgerCountdown();
+        if (game === 'typer') {
+          displayHighScores('typer', 'typer-highscores');
+          startTyperCountdown();
         }
       }
 
@@ -511,6 +530,237 @@
         bitdodgerCtx.beginPath();
         bitdodgerCtx.arc(rx + 12, ry - 8, 2, 0, Math.PI * 2);
         bitdodgerCtx.fill();
+      }
+
+      // TERMINAL TYPER GAME
+      var typerCanvas, typerCtx, typerInterval, typerCountdownInterval;
+      var typerScore = 0;
+      var typerTimeLeft = 5;
+      var typerBaseTime = 5;
+      var typerGameRunning = false;
+      var typerCurrentWord = '';
+      var typerUsedWords = [];
+      var typerGameStartTime = 0;
+      // Words grouped by length (4-7 chars)
+      var typerWords4 = ['api', 'bot', 'code', 'data', 'file', 'gpu', 'html', 'iot', 'json', 'key', 'loop', 'mesh', 'null', 'open', 'post', 'queue', 'rest', 'sql', 'tcp', 'url', 'vpn', 'web', 'zero', 'ai', 'ml', 'nlp'];
+      var typerWords5 = ['cache', 'cloud', 'debug', 'email', 'ethernet', 'host', 'java', 'linux', 'memory', 'node', 'output', 'packet', 'query', 'script', 'token', 'upload', 'build', 'deploy', 'model', 'train', 'azure', 'docker', 'google', 'aws'];
+      var typerWords6 = ['binary', 'kernel', 'malware', 'python', 'router', 'server', 'widget', 'xml', 'yaml', 'cipher', 'filter', 'gateway', 'latency', 'metric', 'module', 'packet', 'phishing', 'plugin', 'python', 'render', 'router', 'sandbox', 'script', 'socket', 'stream', 'toggle', 'tunnel', 'vector'];
+      var typerWords7 = ['algorithm', 'firewall', 'hardware', 'network', 'protocol', 'quantum', 'virtual', 'wireless', 'bandwidth', 'compile', 'debugger', 'endpoint', 'firewall', 'function', 'gigabyte', 'handler', 'hardware', 'interface', 'javascript', 'keyboard', 'latency', 'malware', 'monitor', 'network', 'operating', 'output', 'payload', 'process', 'program', 'protocol', 'python', 'query', 'recursiv', 'runtime', 'scheduler', 'service', 'storage', 'system', 'terminal', 'traffic', 'upgrade', 'variable', 'virtual', 'wireless'];
+
+      function getRandomWord() {
+        // Determine word length based on score (more time = longer words)
+        var targetLength;
+        if (typerScore <= 5) {
+          targetLength = 7;
+        } else if (typerScore <= 10) {
+          targetLength = 6;
+        } else if (typerScore <= 15) {
+          targetLength = 5;
+        } else {
+          targetLength = 4;
+        }
+        
+        // Get words of the target length
+        var wordList;
+        if (targetLength === 7) wordList = typerWords7;
+        else if (targetLength === 6) wordList = typerWords6;
+        else if (targetLength === 5) wordList = typerWords5;
+        else wordList = typerWords4;
+        
+        // Filter out used words
+        var available = wordList.filter(function(w) { return typerUsedWords.indexOf(w) === -1; });
+        
+        // If all words used, reset and try again
+        if (available.length === 0) {
+          typerUsedWords = [];
+          available = wordList;
+        }
+        
+        var word = available[Math.floor(Math.random() * available.length)];
+        typerUsedWords.push(word);
+        return word;
+      }
+
+      function startTyperCountdown() {
+        // Clear any existing intervals
+        if (typerInterval) clearInterval(typerInterval);
+        if (typerCountdownInterval) clearInterval(typerCountdownInterval);
+        
+        typerScore = 0;
+        typerTimeLeft = 5;
+        typerGameRunning = false;
+        document.getElementById('typerScore').textContent = '0';
+        document.getElementById('typerTime').textContent = '5.0';
+        document.getElementById('typerInput').value = '';
+        document.getElementById('typerInput').focus();
+        
+        // Draw initial canvas
+        drawTyperCountdown(3);
+        
+        var countdown = 3;
+        
+        typerCountdownInterval = setInterval(function() {
+          countdown--;
+          if (countdown > 0) {
+            drawTyperCountdown(countdown);
+          } else {
+            clearInterval(typerCountdownInterval);
+            startTyper();
+          }
+        }, 1000);
+      }
+      
+      function drawTyperCountdown(num) {
+        typerCanvas = document.getElementById('typerCanvas');
+        typerCtx = typerCanvas.getContext('2d');
+        
+        // Dark cyber background
+        typerCtx.fillStyle = '#0a0a0f';
+        typerCtx.fillRect(0, 0, 600, 400);
+        
+        // Grid lines
+        typerCtx.strokeStyle = '#1a1a2e';
+        typerCtx.lineWidth = 1;
+        for (var i = 0; i < 400; i += 40) {
+          typerCtx.beginPath();
+          typerCtx.moveTo(0, i);
+          typerCtx.lineTo(600, i);
+          typerCtx.stroke();
+        }
+        for (var j = 0; j < 600; j += 40) {
+          typerCtx.beginPath();
+          typerCtx.moveTo(j, 0);
+          typerCtx.lineTo(j, 400);
+          typerCtx.stroke();
+        }
+        
+        // Draw countdown number
+        typerCtx.font = 'bold 120px monospace';
+        typerCtx.textAlign = 'center';
+        typerCtx.fillStyle = '#00ff41';
+        typerCtx.shadowColor = '#00ff41';
+        typerCtx.shadowBlur = 20;
+        typerCtx.fillText(num, 300, 240);
+        typerCtx.shadowBlur = 0;
+      }
+
+      function startTyper() {
+        typerScore = 0;
+        typerBaseTime = 5;
+        typerTimeLeft = 5;
+        typerUsedWords = [];
+        typerGameStartTime = Date.now();
+        typerCurrentWord = getRandomWord();
+        typerGameRunning = true;
+        
+        document.getElementById('typerScore').textContent = '0';
+        document.getElementById('typerTime').textContent = '5.0';
+        document.getElementById('typerInput').value = '';
+        document.getElementById('typerInput').focus();
+        
+        drawTyper();
+        
+        if (typerInterval) clearInterval(typerInterval);
+        typerInterval = setInterval(updateTyper, 100);
+        
+        document.getElementById('typerInput').addEventListener('keydown', handleTyperKey);
+      }
+
+      function handleTyperKey(e) {
+        if (e.key === 'Enter' && typerGameRunning) {
+          var input = document.getElementById('typerInput').value.toLowerCase().trim();
+          if (input === typerCurrentWord) {
+            typerScore++;
+            // Reset time: 5 seconds minus 0.2 × score (minimum 1 second)
+            typerTimeLeft = Math.max(1, 5 - (typerScore * 0.2));
+            typerCurrentWord = getRandomWord();
+            document.getElementById('typerInput').value = '';
+            document.getElementById('typerScore').textContent = typerScore;
+            document.getElementById('typerTime').textContent = typerTimeLeft.toFixed(1);
+            drawTyper();
+          }
+        }
+      }
+
+      function updateTyper() {
+        if (!typerGameRunning) return;
+        
+        typerTimeLeft -= 0.1;
+        document.getElementById('typerTime').textContent = typerTimeLeft.toFixed(1);
+        
+        if (typerTimeLeft <= 0) {
+          typerGameRunning = false;
+          clearInterval(typerInterval);
+          var finalScore = typerScore;
+          saveHighScore('typer', finalScore);
+          displayHighScores('typer', 'typer-highscores');
+          
+          // Calculate typing stats based on actual game time
+          var gameDuration = (Date.now() - typerGameStartTime) / 1000 / 60; // minutes
+          var typerWPM = gameDuration > 0 ? Math.round(finalScore / gameDuration) : 0;
+          var typerPercent, typerRank;
+          if (finalScore <= 5) { typerPercent = '70%'; typerRank = 'Beginner'; }
+          else if (finalScore <= 10) { typerPercent = '40%'; typerRank = 'Average'; }
+          else if (finalScore <= 15) { typerPercent = '15%'; typerRank = 'Fast Typist'; }
+          else if (finalScore <= 20) { typerPercent = '4%'; typerRank = 'Expert'; }
+          else { typerPercent = '1%'; typerRank = 'Elite'; }
+          
+          // Show custom game over modal
+          document.getElementById('typerFinalScore').textContent = finalScore;
+          document.getElementById('typerFinalWPM').textContent = typerWPM;
+          document.getElementById('typerFinalRank').textContent = typerRank;
+          document.getElementById('typerFinalPercent').textContent = typerPercent;
+          document.getElementById('typer-gameover').style.display = 'flex';
+        }
+      }
+
+      function drawTyper() {
+        typerCanvas = document.getElementById('typerCanvas');
+        typerCtx = typerCanvas.getContext('2d');
+        
+        // Dark cyber background
+        typerCtx.fillStyle = '#0a0a0f';
+        typerCtx.fillRect(0, 0, 600, 400);
+        
+        // Grid lines
+        typerCtx.strokeStyle = '#1a1a2e';
+        typerCtx.lineWidth = 1;
+        for (var i = 0; i < 400; i += 40) {
+          typerCtx.beginPath();
+          typerCtx.moveTo(0, i);
+          typerCtx.lineTo(600, i);
+          typerCtx.stroke();
+        }
+        for (var j = 0; j < 600; j += 40) {
+          typerCtx.beginPath();
+          typerCtx.moveTo(j, 0);
+          typerCtx.lineTo(j, 400);
+          typerCtx.stroke();
+        }
+        
+        // Draw current word
+        typerCtx.font = 'bold 48px monospace';
+        typerCtx.textAlign = 'center';
+        typerCtx.fillStyle = '#00ff41';
+        typerCtx.shadowColor = '#00ff41';
+        typerCtx.shadowBlur = 10;
+        typerCtx.fillText(typerCurrentWord, 300, 200);
+        typerCtx.shadowBlur = 0;
+        
+        // Draw instructions
+        typerCtx.font = '16px monospace';
+        typerCtx.fillStyle = '#666';
+        typerCtx.fillText('Type the word and press Enter', 300, 280);
+        
+        // Draw score
+        typerCtx.font = 'bold 24px monospace';
+        typerCtx.fillStyle = '#00ffff';
+        typerCtx.textAlign = 'left';
+        typerCtx.fillText('Score: ' + typerScore, 20, 40);
+        
+        // Draw time
+        typerCtx.textAlign = 'right';
+        typerCtx.fillText('Time: ' + typerTimeLeft.toFixed(1) + 's', 580, 40);
       }
     </script>
   </body>
