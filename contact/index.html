@@ -48,11 +48,22 @@
     <link rel="stylesheet" href="/assets/css/style.css" />
   </head>
   <body>
+    <!-- Dial-up loading overlay -->
+    <div class="dialup-overlay" id="dialupOverlay">
+      <div class="dialup-screen">
+        <div class="dialup-title">📞 CONNECTING...</div>
+        <div class="dialup-text" id="dialupText"></div>
+        <div class="dialup-progress">
+          <div class="dialup-progress-bar" id="dialupProgress"></div>
+        </div>
+      </div>
+    </div>
+
     <header class="site-header">
       <a href="#main-content" class="skip-link">Skip to main content</a>
       <div class="container nav">
         <a class="brand" href="/">
-          <img src="/assets/img/logo.png" alt="IM IT logo" class="logo" />
+          <img src="/assets/img/logo-removebg-preview.png" alt="IM IT logo" class="logo" />
           <span class="brand-text">
             <span class="brand-name">IM IT</span>
             <span class="brand-tag">Cybersecurity & IT. Simplified.</span>
@@ -72,7 +83,7 @@
           <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
             <span class="icon">🌙</span>
           </button>
-          <a class="btn btn-primary" href="/contact/">Book a Free Consultation</a>
+          <a href="/contact/" class="btn btn-primary">Book a Free Consultation</a>
         </div>
 
         <button class="icon-btn mobile-menu" id="mobileMenuBtn" aria-label="Open menu" title="Menu">
@@ -90,7 +101,7 @@
           <a href="/coming-soon/">Coming Soon</a>
           <div class="mobile-actions">
             <button class="btn btn-secondary" id="themeToggleMobile">Toggle Dark Mode</button>
-            <a class="btn btn-primary" href="/contact/">Book a Free Consultation</a>
+            <a href="/contact/" class="btn btn-primary">Book a Free Consultation</a>
           </div>
         </div>
       </div>
@@ -170,7 +181,7 @@
       <div class="container footer-grid">
         <div>
           <div class="footer-brand">
-            <img src="/assets/img/logo.png" alt="IM IT logo" class="logo" />
+            <img src="/assets/img/logo-removebg-preview.png" alt="IM IT logo" class="logo" />
             <strong>IM IT</strong>
           </div>
           <p class="muted">
@@ -211,6 +222,47 @@
       </div>
     </footer>
 
+    <script>
+      // Theme toggle
+      var themeToggle = document.getElementById('themeToggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme') || 'dark';
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+      var themeToggleMobile = document.getElementById('themeToggleMobile');
+      if (themeToggleMobile) {
+        themeToggleMobile.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme') || 'dark';
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+      var savedTheme = localStorage.getItem('theme');
+      if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+      var yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+      var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      var mobileDrawer = document.getElementById('mobileDrawer');
+      if (mobileMenuBtn && mobileDrawer) {
+        mobileMenuBtn.addEventListener('click', function() {
+          mobileDrawer.classList.toggle('open');
+        });
+      }
+      var revealItems = document.querySelectorAll('[data-reveal]');
+      if (revealItems.length) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) entry.target.classList.add('revealed');
+          });
+        }, { threshold: 0.12 });
+        revealItems.forEach(function(el) { observer.observe(el); });
+      }
+    </script>
     <script src="/assets/js/main.js"></script>
   </body>
 </html>
