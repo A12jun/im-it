@@ -20,7 +20,6 @@ async function loadPartial(targetId, url) {
   } catch (err) {
     console.error('Error loading', url, '-', err.message);
     // Fallback: show error message
-    el.innerHTML = '<div style="padding: 20px; color: red;">Error loading content. Please refresh the page or try a different browser.</div>';
   }
 }
 
@@ -97,19 +96,9 @@ function initContactForm() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    
-    // Basic validation
-    if (!data.name || !data.email || !data.message) {
+    // HTML5 form validation handles required fields
+    if (!form.checkValidity()) {
       showMessage("Please fill in all required fields.", "error");
-      return;
-    }
-
-    // Email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
-      showMessage("Please enter a valid email address.", "error");
       return;
     }
 
@@ -121,7 +110,7 @@ function initContactForm() {
     try {
       const response = await fetch(form.action, {
         method: "POST",
-        body: formData,
+        body: new FormData(form),
         headers: {
           "Accept": "application/json"
         }
@@ -134,11 +123,11 @@ function initContactForm() {
         throw new Error("Form submission failed");
       }
     } catch (error) {
-      showMessage("Sorry, there was an error sending your message. Please try again or use the email below.", "error");
+      showMessage("Sorry, there was an error sending your message. Please try again or email us directly.", "error");
     } finally {
       // Re-enable submit button
       submitBtn.disabled = false;
-      submitBtn.textContent = "Send";
+      submitBtn.textContent = "Send Request";
       submitBtn.classList.remove("btn-loading");
     }
   });
@@ -257,7 +246,7 @@ function initInfiniteScroll(trackId, speed = 1) {
 
 // ---- Dial-up loading for navigation ----
 function initDialupNavigation() {
-  // Links that should show dial-up animation (only Coming Soon)
+  // Links that should show dial-up animation
   const dialupLinks = ['/coming-soon/'];
   
   document.addEventListener('click', (e) => {

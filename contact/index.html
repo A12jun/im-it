@@ -61,9 +61,10 @@
 
         <nav class="nav-links" aria-label="Primary navigation" role="navigation">
           <a href="/" data-nav="home">Home</a>
+          <a href="/about-us/" data-nav="about-us">About Us</a>
           <a href="/pricing/" data-nav="pricing">Pricing</a>
           <a href="/team/" data-nav="team">Team</a>
-          <a href="/contact/" data-nav="contact" class="active">Contact</a>
+          <a href="/contact/" data-nav="contact" class="active">Contact Us</a>
           <a href="/coming-soon/" data-nav="coming-soon">Coming Soon</a>
         </nav>
 
@@ -82,9 +83,10 @@
       <div class="mobile-drawer" id="mobileDrawer">
         <div class="container mobile-links">
           <a href="/">Home</a>
+          <a href="/about-us/">About Us</a>
           <a href="/pricing/">Pricing</a>
           <a href="/team/">Team</a>
-          <a href="/contact/">Contact</a>
+          <a href="/contact/">Contact Us</a>
           <a href="/coming-soon/">Coming Soon</a>
           <div class="mobile-actions">
             <button class="btn btn-secondary" id="themeToggleMobile">Toggle Dark Mode</button>
@@ -98,65 +100,69 @@
       <div class="container">
         <h2 class="section-title" data-reveal>Contact Us</h2>
         <p class="muted" data-reveal>
-          Tell us what you're building. We'll respond quickly.
+          Let us know what you're building. We'll respond within 2-3 Business days.
         </p>
 
         <div class="grid-2" style="margin-top: 24px">
-          <div class="card card-gradient" data-reveal>
-            <form id="contactForm" action="https://formspree.io/f/maqdjdnv" method="POST">
+          <div class="card" data-reveal>
+            <form id="contactForm" action="https://formspree.io/f/whasabi71@yahoo.com" method="POST">
               <div class="field">
-                <label>Name</label>
-                <input name="name" required />
+                <label>Full Name / Business Name *</label>
+                <input name="name" required placeholder="Your full name or business name" />
+              </div>
+
+              <div class="field" style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                <input type="checkbox" name="isBusiness" id="isBusiness" style="width: auto;" />
+                <label for="isBusiness" style="margin: 0; font-weight: normal;">This is a business</label>
+              </div>
+
+              <div class="field" id="authField" style="display: none; margin-top: 8px;">
+                <input type="checkbox" name="authorized" id="authorized" style="width: auto;" />
+                <label for="authorized" style="margin: 0; font-weight: normal;">I am authorized to make decisions for the business</label>
               </div>
 
               <div class="field">
-                <label>Email</label>
-                <input type="email" name="email" required />
+                <label>Email *</label>
+                <input type="email" name="email" required placeholder="your@email.com" />
               </div>
 
               <div class="field">
-                <label>Topic</label>
-                <select name="topic">
-                  <option>Homelab Deployment</option>
-                  <option>Cybersecurity</option>
-                  <option>Managed IT</option>
-                  <option>MY.AI Vision</option>
-                  <option>Other</option>
-                </select>
+                <label>Contact Number (Optional)</label>
+                <input type="tel" name="phone" placeholder="Your phone number" />
               </div>
 
               <div class="field">
-                <label>Message</label>
-                <textarea name="message" required></textarea>
+                <label>Description of Request *</label>
+                <textarea name="description" rows="5" placeholder="Tell us about what you're looking for..." required></textarea>
               </div>
 
-              <button class="btn btn-primary" type="submit" id="submitBtn" style="width: 100%;">Send Message</button>
+              <button class="btn btn-primary" type="submit" id="submitBtn" style="width: 100%;">Send Request</button>
               <div id="formMessage" style="margin-top: 10px; display: none;"></div>
             </form>
           </div>
 
-          <div class="card card-gradient" data-reveal>
-            <h3 style="color: var(--accent-pink);">📧 Email Directly</h3>
-            <p class="muted" style="margin-top: 10px;">
-              <a href="mailto:portfolio.request305@passmail.com" style="color: var(--accent-pink); font-weight: 600; font-size: 18px;">
-                portfolio.request305@passmail.com
-              </a>
-            </p>
-
-            <h3 style="margin-top: 24px;">What to include</h3>
+          <div class="card" data-reveal>
+            <h3>What to include</h3>
             <ul class="list">
               <li>Home or business?</li>
-              <li>What services you want</li>
-              <li>Existing hardware</li>
-              <li>Timeline</li>
+              <li>What services do you want?</li>
+              <li>Existing hardware?</li>
+              <li>Timeline?</li>
             </ul>
 
-            <div style="margin-top: 24px; padding: 16px; background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); border-radius: 12px; border: 1px solid rgba(236, 72, 153, 0.2);">
-              <p style="margin: 0; color: var(--text); font-weight: 600;">💬 Prefer Client Intake?</p>
-              <p class="muted" style="margin-top: 8px;">For custom AI and automation projects, use our <a href="/client-intake.html" style="color: var(--accent-pink);">Client Intake Form</a></p>
+            <div style="margin-top: 24px; padding: 16px; background: var(--bg); border-radius: 12px; border: 1px solid var(--border);">
+              <p style="margin: 0; color: var(--text); font-weight: 600;">💬 Prefer faster Client Intake?</p>
+              <p class="muted" style="margin-top: 8px;">For custom AI and automation projects, use our <a href="/client-intake.html">Client Intake Form</a></p>
             </div>
           </div>
         </div>
+
+        <script>
+          // Show/hide authorization checkbox based on business checkbox
+          document.getElementById('isBusiness').addEventListener('change', function() {
+            document.getElementById('authField').style.display = this.checked ? 'block' : 'none';
+          });
+        </script>
       </div>
     </main>
 
@@ -178,7 +184,7 @@
           <ul>
             <li><a href="/team/">Team</a></li>
             <li><a href="/pricing/">Pricing</a></li>
-            <li><a href="/contact/">Contact</a></li>
+            <li><a href="/contact/">Contact Us</a></li>
           </ul>
         </div>
 
@@ -187,6 +193,7 @@
           <ul>
             <li><a href="/pricing/">Homelab Deployments</a></li>
             <li><a href="/pricing/">Cybersecurity</a></li>
+            <li><a href="/contact/">Get a Quote</a></li>
             <li><a href="/coming-soon/">MY.AI (Coming Soon)</a></li>
           </ul>
         </div>

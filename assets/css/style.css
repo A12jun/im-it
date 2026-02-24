@@ -7,6 +7,7 @@
   --border: #e5e7eb;
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
+  --accent-pink: #ec4899;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
 
@@ -24,6 +25,9 @@ html[data-theme="dark"] {
   --border: #2a2a2a;
   --primary: #3b82f6;
   --primary-hover: #60a5fa;
+  --accent-pink: #ec4899;
+  --glow-pink: rgba(236, 72, 153, 0.5);
+  --accent-gradient: linear-gradient(135deg, #ec4899, #a855f7);
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
@@ -76,6 +80,7 @@ a:hover {
 .nav {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 24px;
   padding: 16px var(--pad);
 }
@@ -84,7 +89,6 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-right: auto;
 }
 
 .logo {
@@ -136,6 +140,7 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-left: auto;
 }
 
 /* Buttons */
