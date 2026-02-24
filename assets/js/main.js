@@ -332,19 +332,53 @@ function initTabs() {
 
   tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Don't do anything if clicking on already active tab
-      if (btn.classList.contains('active')) return;
-      
       const tabId = btn.dataset.tab;
+      // Always reset to first card when clicking any tab
+      resetAllTabs(tabButtons, tabContents);
       switchTabDirect(tabId, tabButtons, tabContents);
     });
+  });
+}
+
+function resetAllTabs(tabButtons, tabContents) {
+  // Reset all tabs to first card with no animation
+  tabContents.forEach(c => {
+    c.classList.remove('active');
+    const cards = c.querySelectorAll('.book-card');
+    const container = c.querySelector('.scroll-container');
+    
+    cards.forEach(card => {
+      card.classList.remove('falling', 'active', 'glitch');
+    });
+    
+    if (container) {
+      container.dataset.currentIndex = 0;
+      const firstCard = container.querySelector('.book-card');
+      if (firstCard) {
+        firstCard.classList.add('active');
+      }
+      // Reset arrow visibility
+      const leftArrow = container.querySelector('.scroll-arrow.left');
+      const rightArrow = container.querySelector('.scroll-arrow.right');
+      if (cards.length > 1) {
+        if (leftArrow) leftArrow.style.display = 'flex';
+        if (rightArrow) rightArrow.style.display = 'flex';
+      }
+    }
   });
 }
 
 function switchTabDirect(tabId, tabButtons, tabContents) {
   // Remove active class from all buttons and contents
   tabButtons.forEach(b => b.classList.remove('active'));
-  tabContents.forEach(c => c.classList.remove('active'));
+  tabContents.forEach(c => {
+    c.classList.remove('active');
+    // Remove animation classes
+    const cards = c.querySelectorAll('.book-card');
+    cards.forEach(card => {
+      card.classList.remove('falling', 'active');
+    });
+  });
 
   // Add active class to clicked button and corresponding content
   const btn = document.querySelector(`[data-tab="${tabId}"]`);
@@ -354,11 +388,19 @@ function switchTabDirect(tabId, tabButtons, tabContents) {
   if (targetContent) {
     targetContent.classList.add('active');
     
-    // Reset card index for the new tab
+    // Add falling animation to first card
     const container = targetContent.querySelector('.scroll-container');
     if (container) {
       container.dataset.currentIndex = 0;
-      showCard(container, 0);
+      const firstCard = container.querySelector('.book-card');
+      if (firstCard) {
+        // Trigger reflow to restart animation
+        firstCard.classList.add('falling');
+        setTimeout(() => {
+          firstCard.classList.add('active');
+          firstCard.classList.remove('falling');
+        }, 50);
+      }
     }
   }
 }
@@ -374,15 +416,21 @@ function initScrollArrows() {
     
     if (cards.length === 0) return;
     
+    // Hide arrows if only 1 card
+    if (cards.length === 1) {
+      if (leftArrow) leftArrow.style.display = 'none';
+      if (rightArrow) rightArrow.style.display = 'none';
+    }
+    
     // Track current card index per container
     container.dataset.currentIndex = 0;
     showCard(container, 0);
     
-    if (leftArrow) {
+    if (leftArrow && cards.length > 1) {
       leftArrow.addEventListener('click', () => navigateCard(container, -1));
     }
     
-    if (rightArrow) {
+    if (rightArrow && cards.length > 1) {
       rightArrow.addEventListener('click', () => navigateCard(container, 1));
     }
   });
@@ -390,6 +438,9 @@ function initScrollArrows() {
 
 function showCard(container, index) {
   const cards = container.querySelectorAll('.book-card');
+  const leftArrow = container.querySelector('.scroll-arrow.left');
+  const rightArrow = container.querySelector('.scroll-arrow.right');
+  
   if (cards.length === 0) return;
   
   // Clamp index
@@ -399,11 +450,19 @@ function showCard(container, index) {
   container.dataset.currentIndex = index;
   
   cards.forEach((card, i) => {
-    card.classList.remove('active', 'flipping-next', 'flipping-prev', 'enter-next', 'enter-prev');
+    card.classList.remove('active', 'flipping-next', 'flipping-prev', 'enter-next', 'enter-prev', 'glitch');
     if (i === index) {
       card.classList.add('active');
     }
   });
+  
+  // Show/hide arrows based on position
+  if (leftArrow && cards.length > 1) {
+    leftArrow.style.display = index === 0 ? 'none' : 'flex';
+  }
+  if (rightArrow && cards.length > 1) {
+    rightArrow.style.display = index === cards.length - 1 ? 'none' : 'flex';
+  }
   
   // Update page dots if they exist
   updatePageDots(container, index);
@@ -411,25 +470,11 @@ function showCard(container, index) {
 
 function navigateCard(container, direction) {
   const cards = container.querySelectorAll('.book-card');
-  const tabContent = container.closest('.tab-content');
   const currentIndex = parseInt(container.dataset.currentIndex) || 0;
   let newIndex = currentIndex + direction;
   
-  // If going past the last card, move to next tab
-  if (newIndex >= cards.length && direction > 0) {
-    if (tabContent) {
-      goToNextTab(tabContent);
-    }
-    return;
-  }
-  
-  // If going before first card, move to previous tab
-  if (newIndex < 0 && direction < 0) {
-    if (tabContent) {
-      goToPrevTab(tabContent);
-    }
-    return;
-  }
+  // Don't navigate if would go past bounds
+  if (newIndex < 0 || newIndex >= cards.length) return;
   
   // Apply Matrix glitch effect
   const currentCard = cards[currentIndex];
@@ -460,6 +505,12 @@ function goToNextTab(currentTabContent) {
   // Go to next tab
   const nextIndex = (currentIndex + 1) % allTabs.length;
   
+  // Remove animation classes from all cards
+  allTabs.forEach(tab => {
+    const cards = tab.querySelectorAll('.book-card');
+    cards.forEach(card => card.classList.remove('falling', 'active'));
+  });
+  
   // Update tabs
   allTabs.forEach((tab, i) => {
     tab.classList.toggle('active', i === nextIndex);
@@ -469,7 +520,7 @@ function goToNextTab(currentTabContent) {
     btn.classList.toggle('active', i === nextIndex);
   });
   
-  // Reset card index for new tab
+  // Reset card index for new tab (no animation)
   const nextTab = allTabs[nextIndex];
   const nextContainer = nextTab.querySelector('.scroll-container');
   if (nextContainer) {
@@ -491,6 +542,12 @@ function goToPrevTab(currentTabContent) {
   // Go to previous tab (wrap around)
   const prevIndex = currentIndex <= 0 ? allTabs.length - 1 : currentIndex - 1;
   
+  // Remove animation classes from all cards
+  allTabs.forEach(tab => {
+    const cards = tab.querySelectorAll('.book-card');
+    cards.forEach(card => card.classList.remove('falling', 'active'));
+  });
+  
   // Update tabs
   allTabs.forEach((tab, i) => {
     tab.classList.toggle('active', i === prevIndex);
@@ -500,7 +557,7 @@ function goToPrevTab(currentTabContent) {
     btn.classList.toggle('active', i === prevIndex);
   });
   
-  // Reset card index for new tab
+  // Reset card index for new tab (no animation)
   const prevTab = allTabs[prevIndex];
   const prevContainer = prevTab.querySelector('.scroll-container');
   if (prevContainer) {
