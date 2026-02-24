@@ -275,6 +275,161 @@ function initTabs() {
   });
 }
 
+// ---- Book-style page flip ----
+function initScrollArrows() {
+  const containers = document.querySelectorAll('.scroll-container');
+  
+  containers.forEach(container => {
+    const cards = container.querySelectorAll('.book-card');
+    const leftArrow = container.querySelector('.scroll-arrow.left');
+    const rightArrow = container.querySelector('.scroll-arrow.right');
+    
+    if (cards.length === 0) return;
+    
+    // Track current card index per container
+    container.dataset.currentIndex = 0;
+    showCard(container, 0);
+    
+    if (leftArrow) {
+      leftArrow.addEventListener('click', () => navigateCard(container, -1));
+    }
+    
+    if (rightArrow) {
+      rightArrow.addEventListener('click', () => navigateCard(container, 1));
+    }
+  });
+}
+
+function showCard(container, index) {
+  const cards = container.querySelectorAll('.book-card');
+  if (cards.length === 0) return;
+  
+  // Clamp index
+  if (index < 0) index = 0;
+  if (index >= cards.length) index = cards.length - 1;
+  
+  container.dataset.currentIndex = index;
+  
+  cards.forEach((card, i) => {
+    card.classList.remove('active', 'flipping-next', 'flipping-prev', 'enter-next', 'enter-prev');
+    if (i === index) {
+      card.classList.add('active');
+    }
+  });
+  
+  // Update page dots if they exist
+  updatePageDots(container, index);
+}
+
+function navigateCard(container, direction) {
+  const cards = container.querySelectorAll('.book-card');
+  const tabContent = container.closest('.tab-content');
+  const currentIndex = parseInt(container.dataset.currentIndex) || 0;
+  let newIndex = currentIndex + direction;
+  
+  // If going past the last card, move to next tab
+  if (newIndex >= cards.length && direction > 0) {
+    if (tabContent) {
+      goToNextTab(tabContent);
+    }
+    return;
+  }
+  
+  // If going before first card, move to previous tab
+  if (newIndex < 0 && direction < 0) {
+    if (tabContent) {
+      goToPrevTab(tabContent);
+    }
+    return;
+  }
+  
+  // Animate the flip
+  const currentCard = cards[currentIndex];
+  const nextCard = cards[newIndex];
+  
+  if (direction > 0) {
+    currentCard.classList.add('flipping-next');
+    nextCard.classList.add('enter-next');
+  } else {
+    currentCard.classList.add('flipping-prev');
+    nextCard.classList.add('enter-prev');
+  }
+  
+  setTimeout(() => {
+    showCard(container, newIndex);
+  }, 300);
+}
+
+function goToNextTab(currentTabContent) {
+  const allTabs = document.querySelectorAll('.tab-content');
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  
+  // Find current tab index
+  let currentIndex = -1;
+  allTabs.forEach((tab, i) => {
+    if (tab === currentTabContent) currentIndex = i;
+  });
+  
+  // Go to next tab
+  const nextIndex = (currentIndex + 1) % allTabs.length;
+  
+  // Update tabs
+  allTabs.forEach((tab, i) => {
+    tab.classList.toggle('active', i === nextIndex);
+  });
+  
+  tabButtons.forEach((btn, i) => {
+    btn.classList.toggle('active', i === nextIndex);
+  });
+  
+  // Reset card index for new tab
+  const nextTab = allTabs[nextIndex];
+  const nextContainer = nextTab.querySelector('.scroll-container');
+  if (nextContainer) {
+    nextContainer.dataset.currentIndex = 0;
+    showCard(nextContainer, 0);
+  }
+}
+
+function goToPrevTab(currentTabContent) {
+  const allTabs = document.querySelectorAll('.tab-content');
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  
+  // Find current tab index
+  let currentIndex = -1;
+  allTabs.forEach((tab, i) => {
+    if (tab === currentTabContent) currentIndex = i;
+  });
+  
+  // Go to previous tab (wrap around)
+  const prevIndex = currentIndex <= 0 ? allTabs.length - 1 : currentIndex - 1;
+  
+  // Update tabs
+  allTabs.forEach((tab, i) => {
+    tab.classList.toggle('active', i === prevIndex);
+  });
+  
+  tabButtons.forEach((btn, i) => {
+    btn.classList.toggle('active', i === prevIndex);
+  });
+  
+  // Reset card index for new tab
+  const prevTab = allTabs[prevIndex];
+  const prevContainer = prevTab.querySelector('.scroll-container');
+  if (prevContainer) {
+    const cards = prevContainer.querySelectorAll('.book-card');
+    prevContainer.dataset.currentIndex = cards.length - 1;
+    showCard(prevContainer, cards.length - 1);
+  }
+}
+
+function updatePageDots(container, index) {
+  const dots = container.querySelectorAll('.page-dot');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+}
+
 (async function init() {
   initTheme();
 
@@ -301,4 +456,5 @@ function initTabs() {
 
   initReveal();
   initTabs();
+  initScrollArrows();
 })();
